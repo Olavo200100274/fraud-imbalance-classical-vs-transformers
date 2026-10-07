@@ -1,0 +1,232 @@
+{
+  "base_test_prediction_validation": {
+    "decisions_changed_at_frozen_threshold": 0,
+    "labels_exactly_equal": true,
+    "maximum_absolute_score_difference": 0.0,
+    "recomputed_metrics": {
+      "F1": 0.044874,
+      "F2": 0.080545,
+      "FN": 1828,
+      "FP": 14263,
+      "FP/TP": 37.7328,
+      "PR-AUC": 0.01901,
+      "ROC-AUC": 0.627945,
+      "TN": 183531,
+      "TP": 378,
+      "alert_rate": 0.073205,
+      "brier_score": 0.020614,
+      "k_used": 1000,
+      "precision_at_k": 0.03,
+      "recall_at_k": 0.013599,
+      "threshold": -40.259704
+    },
+    "rows": 200000,
+    "score_absolute_tolerance": 1e-12,
+    "score_relative_tolerance": 1e-10,
+    "scores_bitwise_equal": true
+  },
+  "source_artefacts_sha256": {
+    "completed.json": "2d855a821ca8561002625d568d34de5d3dcfa54514379a7bd8f85d77ff19c2a3",
+    "config.json": "b3beefcbaa5bfa52dc1306d0633246c1490596f43a11d6f350dc7e4d7e311294",
+    "metrics_test.json": "d442f522754cd54cada5f4a5f5ec5a3e28958580e4887773c53697486f9e99d4",
+    "model.joblib": "35d0156c4df2cd8398132d62e0e8ff267769aad3f053044425c7c79fb85d9691",
+    "test_row_indices.npy": "153a4f3ec537e7084a6b3efbfd3991bfe548c57fcd60d44ebe682e0059243ae7",
+    "y_test.npy": "d4da3d6a6c62ef54d683eb8837c0d88c54a26ff4fe32d7f8b74ae491201e83fd",
+    "y_test_scores.npy": "7d7284987334ffa8868027d2d07798b7328186275e3ee45ab1bd1815cbe587d9"
+  },
+  "source_run": "results_revision/20261005/baf_base/ocsvm/none/run_20261007_005004_673805",
+  "threshold_source": "config.threshold_exact",
+  "threshold_used": -40.25970411861351,
+  "variants": {
+    "baf_var1": {
+      "directory": "ocsvm/baf_var1",
+      "metrics": {
+        "F1": 0.037455,
+        "F2": 0.066235,
+        "FN": 1680,
+        "FP": 11889,
+        "FP/TP": 45.0341,
+        "PR-AUC": 0.016372,
+        "ROC-AUC": 0.595925,
+        "TN": 163693,
+        "TP": 264,
+        "alert_rate": 0.068458,
+        "bootstrap_ci": {
+          "F2_ci": [
+            0.058706,
+            0.073584
+          ],
+          "PR-AUC_ci": [
+            0.015229,
+            0.017806
+          ],
+          "ROC-AUC_ci": [
+            0.582354,
+            0.608647
+          ]
+        },
+        "brier_score": 0.019616,
+        "fraud_prevalence": 0.010950508657886732,
+        "k_used": 887,
+        "precision": 0.021723031350283882,
+        "precision_at_k": 0.027057,
+        "recall": 0.13580246913580246,
+        "recall_at_k": 0.012346,
+        "threshold": -40.259704
+      },
+      "metrics_test_sha256": "23c8a773d6c348dc607fb0fe44c62f7a415657c05b7dc7262fc94a463137d106"
+    },
+    "baf_var2": {
+      "directory": "ocsvm/baf_var2",
+      "metrics": {
+        "F1": 0.048717,
+        "F2": 0.092482,
+        "FN": 1505,
+        "FP": 16108,
+        "FP/TP": 35.7162,
+        "PR-AUC": 0.021953,
+        "ROC-AUC": 0.66163,
+        "TN": 159467,
+        "TP": 451,
+        "alert_rate": 0.093274,
+        "bootstrap_ci": {
+          "F2_ci": [
+            0.084709,
+            0.100786
+          ],
+          "PR-AUC_ci": [
+            0.020275,
+            0.024297
+          ],
+          "ROC-AUC_ci": [
+            0.649388,
+            0.673921
+          ]
+        },
+        "brier_score": 0.023393,
+        "fraud_prevalence": 0.011017794075400916,
+        "k_used": 887,
+        "precision": 0.027235944199528957,
+        "precision_at_k": 0.048478,
+        "recall": 0.2305725971370143,
+        "recall_at_k": 0.021984,
+        "threshold": -40.259704
+      },
+      "metrics_test_sha256": "1b49e1752b266ad749450a113b8f781afe55bfac593e084081a7a9633df9e97b"
+    },
+    "baf_var3": {
+      "directory": "ocsvm/baf_var3",
+      "metrics": {
+        "F1": 0.039783,
+        "F2": 0.074853,
+        "FN": 1605,
+        "FP": 15580,
+        "FP/TP": 43.764,
+        "PR-AUC": 0.017809,
+        "ROC-AUC": 0.614401,
+        "TN": 161177,
+        "TP": 356,
+        "alert_rate": 0.089168,
+        "bootstrap_ci": {
+          "F2_ci": [
+            0.06746,
+            0.082088
+          ],
+          "PR-AUC_ci": [
+            0.016388,
+            0.019615
+          ],
+          "ROC-AUC_ci": [
+            0.601503,
+            0.626586
+          ]
+        },
+        "brier_score": 0.022515,
+        "fraud_prevalence": 0.010972593695095066,
+        "k_used": 893,
+        "precision": 0.022339357429718876,
+        "precision_at_k": 0.032475,
+        "recall": 0.18154003059663437,
+        "recall_at_k": 0.014788,
+        "threshold": -40.259704
+      },
+      "metrics_test_sha256": "8efd69794b7789fc976274751531cbccaa81a1292f5ebf25c786e00dd8e6cb60"
+    },
+    "baf_var4": {
+      "directory": "ocsvm/baf_var4",
+      "metrics": {
+        "F1": 0.046228,
+        "F2": 0.086955,
+        "FN": 1547,
+        "FP": 15495,
+        "FP/TP": 37.5182,
+        "PR-AUC": 0.020537,
+        "ROC-AUC": 0.645561,
+        "TN": 161195,
+        "TP": 413,
+        "alert_rate": 0.089046,
+        "bootstrap_ci": {
+          "F2_ci": [
+            0.078556,
+            0.094445
+          ],
+          "PR-AUC_ci": [
+            0.018868,
+            0.02258
+          ],
+          "ROC-AUC_ci": [
+            0.632977,
+            0.657653
+          ]
+        },
+        "brier_score": 0.022413,
+        "fraud_prevalence": 0.010971172684019032,
+        "k_used": 893,
+        "precision": 0.025961780236359065,
+        "precision_at_k": 0.031355,
+        "recall": 0.21071428571428572,
+        "recall_at_k": 0.014286,
+        "threshold": -40.259704
+      },
+      "metrics_test_sha256": "3dd9591fdd6a1227a42d481a9872910376de8ff16b7ae24189efe98308172440"
+    },
+    "baf_var5": {
+      "directory": "ocsvm/baf_var5",
+      "metrics": {
+        "F1": 0.0367,
+        "F2": 0.069039,
+        "FN": 1647,
+        "FP": 15729,
+        "FP/TP": 47.5196,
+        "PR-AUC": 0.01646,
+        "ROC-AUC": 0.590723,
+        "TN": 161121,
+        "TP": 331,
+        "alert_rate": 0.089807,
+        "bootstrap_ci": {
+          "F2_ci": [
+            0.062105,
+            0.076829
+          ],
+          "PR-AUC_ci": [
+            0.015243,
+            0.018068
+          ],
+          "ROC-AUC_ci": [
+            0.577884,
+            0.604941
+          ]
+        },
+        "brier_score": 0.023376,
+        "fraud_prevalence": 0.01106090768783412,
+        "k_used": 894,
+        "precision": 0.020610211706102118,
+        "precision_at_k": 0.026846,
+        "recall": 0.1673407482305359,
+        "recall_at_k": 0.012133,
+        "threshold": -40.259704
+      },
+      "metrics_test_sha256": "cb6034d6ff8e158a4e68311fea08e00311fd13b2ab7ca3033461486b548d281f"
+    }
+  }
+}

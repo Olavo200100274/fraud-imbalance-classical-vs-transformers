@@ -1,0 +1,16 @@
+\begin{table}[ht!]
+\centering
+\caption{$F_2$ by model $\times$ strategy on BAF Base.}
+\label{tab:factorial_baf_f2}
+\begin{tabular}{l c c c c c c c}
+\toprule
+Model & None & RUS & ROS & SMOTE & SM+T & SMOTEENN & Weights \\
+\midrule
+LR         & \textbf{0.287} & 0.283 & 0.283 & 0.280 & 0.280 & 0.282 & 0.267 \\
+RF         & 0.294 & 0.288 & \textbf{0.303} & 0.280 & 0.280 & 0.280 & 0.296 \\
+LGBM       & 0.316 & 0.318 & 0.319 & 0.293 & 0.293 & 0.300 & \textbf{0.320} \\
+CatBoost   & 0.314 & \textbf{0.317} & 0.316 & 0.303 & 0.303 & 0.309 & 0.317 \\
+FT-Trans.  & 0.304 & 0.301 & 0.310 & 0.257 & 0.257 & 0.269 & \textbf{0.313} \\
+\bottomrule
+\end{tabular}
+\end{table}

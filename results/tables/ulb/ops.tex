@@ -1,0 +1,17 @@
+\begin{table}[ht!]
+\centering
+\caption{Operational metrics on ULB 2013 (strategy\,=\,None, threshold\,=\,max-$F_2$).}
+\label{tab:ops_ulb}
+\begin{tabular}{l c c c c c}
+\toprule
+Model & Alert Rate & FP/TP & P@$k$ & R@$k$ & $k$ \\
+\midrule
+LR         & 0.00153 & 0.2083 & 0.2756 & 0.8211 & 283 \\
+RF         & 0.00146 & 0.1370 & 0.2721 & 0.8105 & 283 \\
+LGBM       & 0.00143 & 0.0800 & 0.2898 & 0.8632 & 283 \\
+CatBoost   & 0.00137 & 0.0986 & 0.2862 & 0.8526 & 283 \\
+FT-Trans.  & 0.00141 & 0.1429 & 0.2792 & 0.8316 & 283 \\
+OCSVM      & 0.00421 & 2.9833 & 0.2191 & 0.6526 & 283 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,20 @@
+{
+  "note": "Single holdout validation split (not 5-fold CV)",
+  "validation": {
+    "F1": 0.206242,
+    "F2": 0.31041,
+    "FN": 939,
+    "FP": 5419,
+    "FP/TP": 6.5605,
+    "PR-AUC": 0.17069,
+    "ROC-AUC": 0.893347,
+    "TN": 152816,
+    "TP": 826,
+    "alert_rate": 0.039031,
+    "brier_score": 0.009917,
+    "k_used": 800,
+    "precision_at_k": 0.31375,
+    "recall_at_k": 0.14221,
+    "threshold": 0.058434
+  }
+}

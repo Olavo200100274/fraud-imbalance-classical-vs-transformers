@@ -1,0 +1,32 @@
+{
+  "best_params": {
+    "classifier__colsample_bytree": 0.8385259170730688,
+    "classifier__learning_rate": 0.013787967726516455,
+    "classifier__min_child_samples": 18,
+    "classifier__n_estimators": 1696,
+    "classifier__num_leaves": 15,
+    "classifier__reg_alpha": 7.076843482825837,
+    "classifier__reg_lambda": 1.3936073897612728e-05,
+    "classifier__subsample": 0.7914708049678084
+  },
+  "best_params_source": "loaded from baseline run (no re-tuning)",
+  "cv_folds": 5,
+  "dataset": "baf_base",
+  "dataset_file": "[external local path omitted]",
+  "dataset_hash_sha256": "7bf10a37ce07e72e14c1b09e5efee3d27261baff4facc7da767b0474dcf9b809",
+  "infer_time_s": 1.2261,
+  "model": "lgbm",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python_version": "3.12.7 (tags/v3.12.7:0b05ead, Oct  1 2024, 03:06:41) [MSC v.1941 64 bit (AMD64)]",
+  "scoring": "average_precision (PR-AUC)",
+  "split_ratio": "80/20 stratified",
+  "split_seed": 42,
+  "strategy": "weights",
+  "test_fraud": 2206,
+  "test_samples": 200000,
+  "threshold_rule": "maximise F2 on validation, take median across folds",
+  "timestamp": "20260316_073500",
+  "train_fraud": 8823,
+  "train_samples": 800000,
+  "train_time_s": 14.51
+}

@@ -1,0 +1,29 @@
+{
+  "best_params": {
+    "classifier__depth": 4,
+    "classifier__iterations": 1394,
+    "classifier__l2_leaf_reg": 7.852943131261864,
+    "classifier__learning_rate": 0.03342954961749707,
+    "classifier__min_data_in_leaf": 22
+  },
+  "best_params_source": "loaded from baseline run (no re-tuning)",
+  "cv_folds": 5,
+  "dataset": "baf_base",
+  "dataset_file": "[external local path omitted]",
+  "dataset_hash_sha256": "7bf10a37ce07e72e14c1b09e5efee3d27261baff4facc7da767b0474dcf9b809",
+  "infer_time_s": 0.2154,
+  "model": "catboost",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python_version": "3.12.7 (tags/v3.12.7:0b05ead, Oct  1 2024, 03:06:41) [MSC v.1941 64 bit (AMD64)]",
+  "scoring": "average_precision (PR-AUC)",
+  "split_ratio": "80/20 stratified",
+  "split_seed": 42,
+  "strategy": "rus",
+  "test_fraud": 2206,
+  "test_samples": 200000,
+  "threshold_rule": "maximise F2 on validation, take median across folds",
+  "timestamp": "20260314_155243",
+  "train_fraud": 8823,
+  "train_samples": 800000,
+  "train_time_s": 8.89
+}

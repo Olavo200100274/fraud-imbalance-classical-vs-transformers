@@ -1,0 +1,17 @@
+\begin{table}[ht!]
+\centering
+\caption{Threshold sensitivity on ULB 2013~--- $F_1$ by threshold strategy (strategy\,=\,None).}
+\label{tab:threshold_ulb_f1}
+\begin{tabular}{l c c c c}
+\toprule
+Model & Fixed (0.5) & max-$F_1$ & max-$F_2$ & Prec\,$\geq$\,0.5 \\
+\midrule
+LR         & 0.688 & 0.791 & 0.791 & 0.612 \\
+RF         & 0.843 & 0.840 & 0.820 & 0.622 \\
+LGBM       & 0.831 & 0.828 & 0.852 & 0.627 \\
+CatBoost   & 0.845 & 0.845 & 0.821 & 0.645 \\
+FT-Trans.  & 0.814 & 0.821 & 0.800 & 0.798 \\
+OCSVM      & 0.213 & 0.391 & 0.359 & 0.395 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,270 @@
+{
+  "consistency": {
+    "jaccard_matrix": {
+      "catboost": {
+        "catboost": 1.0,
+        "lgbm": 1.0,
+        "logreg": 0.6666666666666666
+      },
+      "lgbm": {
+        "catboost": 1.0,
+        "lgbm": 1.0,
+        "logreg": 0.6666666666666666
+      },
+      "logreg": {
+        "catboost": 0.6666666666666666,
+        "lgbm": 0.6666666666666666,
+        "logreg": 1.0
+      }
+    },
+    "rankings": {
+      "catboost": [
+        "device_os",
+        "housing_status",
+        "phone_home_valid",
+        "has_other_cards",
+        "prev_address_months_count",
+        "keep_alive_session",
+        "name_email_similarity",
+        "current_address_months_count",
+        "email_is_free",
+        "income"
+      ],
+      "lgbm": [
+        "device_os",
+        "housing_status",
+        "phone_home_valid",
+        "prev_address_months_count",
+        "has_other_cards",
+        "keep_alive_session",
+        "name_email_similarity",
+        "current_address_months_count",
+        "income",
+        "email_is_free"
+      ],
+      "logreg": [
+        "device_os",
+        "housing_status",
+        "phone_home_valid",
+        "has_other_cards",
+        "keep_alive_session",
+        "payment_type",
+        "name_email_similarity",
+        "email_is_free",
+        "employment_status",
+        "income"
+      ]
+    },
+    "top_k": 10
+  },
+  "global_grouping": "mean(sum(abs(one-hot SHAP contributions)))",
+  "global_units": "log-odds",
+  "local_cases": {
+    "FN": {
+      "additivity_error": 1.2434497875801753e-14,
+      "displayed_signed_features": {
+        "device_os": -0.19475266956484064,
+        "email_is_free": -0.20246505128373277,
+        "has_other_cards": -0.5228881847936511,
+        "housing_status": -0.3488973948189682,
+        "income": -0.1882180589987212,
+        "intended_balcon_amount": -0.21551164930711444,
+        "keep_alive_session": -0.17932748641797322,
+        "name_email_similarity": 0.4176211099412503,
+        "phone_home_valid": -0.35508195883093,
+        "zip_count_4w": 0.15793142289403816
+      },
+      "expected_logit": -5.754637630470976,
+      "output_logit": -7.670793424176792,
+      "remaining_signed_contribution": -0.28456587252516125,
+      "score": 0.0004660304590242191,
+      "test_position": 34370,
+      "true_label": 1
+    },
+    "FP": {
+      "additivity_error": 1.5987211554602254e-14,
+      "displayed_signed_features": {
+        "bank_branch_count_8w": 0.38521523830482846,
+        "credit_risk_score": 0.42494546595570043,
+        "current_address_months_count": 0.38457042155628063,
+        "customer_age": 0.45746958147128364,
+        "date_of_birth_distinct_emails_4w": 0.579440322542985,
+        "device_distinct_emails_8w": 0.7612108946737254,
+        "device_os": 0.8674465163548941,
+        "housing_status": 1.0359536214372174,
+        "income": 0.4527490663570243,
+        "keep_alive_session": 0.4724518035115035
+      },
+      "expected_logit": -5.754637630470976,
+      "output_logit": 1.818798514995473,
+      "remaining_signed_contribution": 1.7519832133010205,
+      "score": 0.8604218959022352,
+      "test_position": 10754,
+      "true_label": 0
+    },
+    "TP": {
+      "additivity_error": 4.440892098500626e-16,
+      "displayed_signed_features": {
+        "credit_risk_score": 0.577101437137803,
+        "current_address_months_count": 0.39274755649496595,
+        "date_of_birth_distinct_emails_4w": 0.46442609006278357,
+        "device_os": 0.7689230099349031,
+        "housing_status": 0.9624855367659119,
+        "income": 0.4506662677883081,
+        "keep_alive_session": 0.4611056376892325,
+        "name_email_similarity": 0.42520905696570366,
+        "phone_home_valid": 0.39076525443985716,
+        "proposed_credit_limit": 0.7813267022497866
+      },
+      "expected_logit": -5.754637630470976,
+      "output_logit": 2.4216499212107694,
+      "remaining_signed_contribution": 2.50153100215249,
+      "score": 0.9184633898243443,
+      "test_position": 37736,
+      "true_label": 1
+    }
+  },
+  "local_grouping": "sum(signed one-hot SHAP contributions)",
+  "local_selection": "highest-score TP and FP; lowest-score FN; selected for illustration only",
+  "manifest_path": "results_revision/20261005/revision_manifest.json",
+  "models": {
+    "catboost": {
+      "complete_global_importance": {
+        "bank_branch_count_8w": 0.1934263342146693,
+        "bank_months_count": 0.0903053521413488,
+        "credit_risk_score": 0.12366296195610825,
+        "current_address_months_count": 0.2699682190122557,
+        "customer_age": 0.11402310758320615,
+        "date_of_birth_distinct_emails_4w": 0.08229183442643806,
+        "days_since_request": 0.12047859623552716,
+        "device_distinct_emails_8w": 0.05417938699045674,
+        "device_fraud_count": 0.0,
+        "device_os": 0.5476396085286127,
+        "email_is_free": 0.2670440165927619,
+        "employment_status": 0.2151942998060308,
+        "foreign_request": 0.021794029080607298,
+        "has_other_cards": 0.36405461720609505,
+        "housing_status": 0.4556401036483629,
+        "income": 0.24797180871496083,
+        "intended_balcon_amount": 0.14997284678068457,
+        "keep_alive_session": 0.30978545497016496,
+        "name_email_similarity": 0.29989676784468955,
+        "payment_type": 0.05750906326164415,
+        "phone_home_valid": 0.38666272691844983,
+        "phone_mobile_valid": 0.02936772900380815,
+        "prev_address_months_count": 0.31922143160625494,
+        "proposed_credit_limit": 0.06340799774304133,
+        "session_length_in_minutes": 0.07355238010726023,
+        "source": 0.00012510102045302018,
+        "velocity_24h": 0.05706479996700553,
+        "velocity_4w": 0.1833252932477882,
+        "velocity_6h": 0.02818638268062545,
+        "zip_count_4w": 0.10693019192068735
+      },
+      "expected_logit": -5.831726632936197,
+      "fraud_samples": 2206,
+      "maximum_logit_additivity_error": 6.039613253960852e-14,
+      "run_directory": "results/baf_base/catboost/none/run_20260312_105918",
+      "source_sha256": {
+        "config.json": "f9c6ce3024012c70bf7ab03058e4311e3d6c998687c6dad2b0344863c5563d0f",
+        "model.joblib": "0c02febdfe0adc04d8638af47902c5cf45b3b62c9bb50d67d53eadd83dec24ed",
+        "shap_values.npy": "7061a1866ac3648d13b2620f52e3b2d6281efd3afce48824f854abefc476c0e2",
+        "y_test.npy": "d4da3d6a6c62ef54d683eb8837c0d88c54a26ff4fe32d7f8b74ae491201e83fd",
+        "y_test_scores.npy": "05c67b0dc01f82e7293ea413b83546d0e2cadac4ba18556ebd13d63404c1b6dc"
+      },
+      "test_samples": 200000
+    },
+    "lgbm": {
+      "complete_global_importance": {
+        "bank_branch_count_8w": 0.14748622918487786,
+        "bank_months_count": 0.08919679727943725,
+        "credit_risk_score": 0.12690146927042362,
+        "current_address_months_count": 0.24786792375042674,
+        "customer_age": 0.10807692955791898,
+        "date_of_birth_distinct_emails_4w": 0.08143160908446187,
+        "days_since_request": 0.11838632369057973,
+        "device_distinct_emails_8w": 0.05035913673265301,
+        "device_fraud_count": 0.0,
+        "device_os": 0.48008018055040746,
+        "email_is_free": 0.2152303090427159,
+        "employment_status": 0.18856241438140142,
+        "foreign_request": 0.023240775477715626,
+        "has_other_cards": 0.27221247196820625,
+        "housing_status": 0.42517440616582397,
+        "income": 0.21878774275955198,
+        "intended_balcon_amount": 0.158115674101942,
+        "keep_alive_session": 0.26301385873729544,
+        "name_email_similarity": 0.25700566749154546,
+        "payment_type": 0.03130306266149019,
+        "phone_home_valid": 0.3351853852711532,
+        "phone_mobile_valid": 0.03428909186320008,
+        "prev_address_months_count": 0.2859122956744554,
+        "proposed_credit_limit": 0.06576619142482261,
+        "session_length_in_minutes": 0.06874751610775177,
+        "source": 0.0,
+        "velocity_24h": 0.06689910452315398,
+        "velocity_4w": 0.1850116368250398,
+        "velocity_6h": 0.04186868864402081,
+        "zip_count_4w": 0.10620388404972733
+      },
+      "expected_logit": -5.754637630470976,
+      "fraud_samples": 2206,
+      "maximum_logit_additivity_error": 5.595524044110789e-14,
+      "run_directory": "results/baf_base/lgbm/none/run_20260312_085758",
+      "source_sha256": {
+        "config.json": "07a57eab5aa39612076244404e9fc2110c2cf72e2307a32b77a8b099b42a31ee",
+        "model.joblib": "e1d1625c469c1e5724bf68bc6ec444e867c3e46827b4c9a69359b2982c529753",
+        "shap_values.npy": "99f257f9fb352e0369ab2addeb4dba63ae69c25c338e8fbfab9a66b49dec8911",
+        "y_test.npy": "d4da3d6a6c62ef54d683eb8837c0d88c54a26ff4fe32d7f8b74ae491201e83fd",
+        "y_test_scores.npy": "2654e3d20000f5aa7b479e7b4e5f2affca74d2eae956208fa6d7abb9c96bc577"
+      },
+      "test_samples": 200000
+    },
+    "logreg": {
+      "complete_global_importance": {
+        "bank_branch_count_8w": 0.03065398363257816,
+        "bank_months_count": 0.14856203921692307,
+        "credit_risk_score": 0.15380900237149028,
+        "current_address_months_count": 0.0026154787203541913,
+        "customer_age": 0.2146231255044156,
+        "date_of_birth_distinct_emails_4w": 0.12743008424813243,
+        "days_since_request": 0.018703395343931697,
+        "device_distinct_emails_8w": 0.06136095828366886,
+        "device_fraud_count": 0.0,
+        "device_os": 0.6441230636732929,
+        "email_is_free": 0.2903394614432077,
+        "employment_status": 0.27862025812378316,
+        "foreign_request": 0.03472963740430024,
+        "has_other_cards": 0.3869540614322807,
+        "housing_status": 0.49646427143268623,
+        "income": 0.2517641297360417,
+        "intended_balcon_amount": 0.08643239275341935,
+        "keep_alive_session": 0.3357282149734455,
+        "name_email_similarity": 0.292708603004764,
+        "payment_type": 0.30911798896581427,
+        "phone_home_valid": 0.4421450723972672,
+        "phone_mobile_valid": 0.06098548866278987,
+        "prev_address_months_count": 0.19923602625467235,
+        "proposed_credit_limit": 0.11375495059146915,
+        "session_length_in_minutes": 0.0008576454436482502,
+        "source": 0.002302937160624517,
+        "velocity_24h": 0.021599126120974706,
+        "velocity_4w": 0.06116204943097564,
+        "velocity_6h": 0.02089317899978957,
+        "zip_count_4w": 0.09510282478609461
+      },
+      "expected_logit": -5.22924834964323,
+      "fraud_samples": 2206,
+      "maximum_logit_additivity_error": 3.552713678800501e-15,
+      "run_directory": "results/baf_base/logreg/none/run_20260310_144310",
+      "source_sha256": {
+        "config.json": "1ff68d97efc5d4fd13c638f61bd322e080195a2c4431842b5a3bbc1206757725",
+        "model.joblib": "7422db882f5f332b2d02fbb4ac2cb003665dfd3c2df4015b7a30cdd6069ffb87",
+        "shap_values.npy": "5ebda4e8c3d2f6c2caaa0df73c08f07a367b1568009d2c2759232c3f3923a1b8",
+        "y_test.npy": "d4da3d6a6c62ef54d683eb8837c0d88c54a26ff4fe32d7f8b74ae491201e83fd",
+        "y_test_scores.npy": "cc4d9f45879ff28eb532062013753c7381dfce5c66cb592ec82847967a5fca0e"
+      },
+      "test_samples": 200000
+    }
+  }
+}

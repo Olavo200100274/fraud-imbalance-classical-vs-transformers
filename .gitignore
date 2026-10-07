@@ -1,49 +1,53 @@
-# runs e reports antigos (não versionar)
-runs/
-reports/
-
-# datasets tracked via Git LFS (see .gitattributes)
-
-
-# Claude Code local settings
-.claude/
-.claude_context/
-
-# Local development and QA workspaces
+# Local environments, editor state and temporary outputs
 .venv/
 tmp/
-
-# archived old GridSearchCV results (large, superseded by Optuna runs)
-results_old_gridSearch/
-
-# outputs de libs
+runs/
+reports/
+.claude/
+.claude_context/
+.vscode/
 catboost_info/
 **/__pycache__/
 *.pyc
 .ipynb_checkpoints/
-
-# OS / editor
 .DS_Store
 Thumbs.db
 *.swp
-.vscode/
+.env
+.env.*
+!.env.example
 
-# Thesis backups
-thesis/Results_old*.tex
+# Writing projects, reviews and handoff bundles stay on the author's computer.
+# Removing these paths from the current tree does not erase previous Git history.
+/Article 1/
+/Article 2/
+/Overleaf/
+/deliverables/
+/Overleaf.zip
+/thesis/
 
-# Overleaf download archive
-Overleaf.zip
+# Raw data and complete training archives are not part of the public evidence export.
+# datasets/README.md and manifest.json identify the exact inputs and official sources.
+/datasets/*.csv
+/datasets/*.parquet
+/datasets/*.zip
+/results/baf_base/
+/results/ulb_2013/
+/results_revision/
+/results_thesis/
+/results_old_gridSearch/
+/run_revision_overnight.ps1
 
-# Unused files from the full Elsevier CAS template distribution.
-# Article 2 keeps only the class/style/bibliography files required by main.tex.
-Article 2/els-cas-templates/
-Article 2/cas-sc-sample.tex
-Article 2/cas-dc.cls
-Article 2/figs/cas-*
-
-# Local literature library and academic review records (not public deliverables).
-# These exclusions do not remove files from earlier Git history.
-/Overleaf/references/
-/deliverables/supervisor_feedback/
-/deliverables/Resumo_Ajustes_Apos_Revisao.docx
+# Superseded figure scripts and local editorial utilities (preserved on disk).
+/src/baf_baseline_summary.py
+/src/generate_convergent_validity_chart.py
+/src/generate_crossdomain_chart.py
+/src/generate_pr_curves_threshold.py
+/src/generate_smote_asymmetry_chart.py
+/src/run_all_transformer.py
+/src/pdf_extract.py
+/src/revision_final_review.py
+/src/revision_thesis_static.py
+/src/test_revision_final_review.py
+/src/test_revision_thesis_static.py
 

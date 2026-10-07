@@ -1,0 +1,20 @@
+{
+  "note": "Single holdout validation, strategy=smoteenn",
+  "validation": {
+    "F1": 0.890411,
+    "F2": 0.868984,
+    "FN": 11,
+    "FP": 5,
+    "FP/TP": 0.0769,
+    "PR-AUC": 0.866884,
+    "ROC-AUC": 0.979951,
+    "TN": 45315,
+    "TP": 65,
+    "alert_rate": 0.001542,
+    "brier_score": 0.001445,
+    "k_used": 226,
+    "precision_at_k": 0.29646,
+    "recall_at_k": 0.881579,
+    "threshold": 0.999996
+  }
+}

@@ -2,3 +2,8 @@
 *.pt filter=lfs diff=lfs merge=lfs -text
 *.npy filter=lfs diff=lfs merge=lfs -text
 datasets/*.csv filter=lfs diff=lfs merge=lfs -text
+
+# The publication inventory hashes exact bytes (including historical CRLF tables).
+# Disable checkout line-ending conversion only for the frozen evidence export.
+/results/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+/publications/*.pdf -text

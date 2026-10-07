@@ -1,0 +1,68 @@
+{
+  "bootstrap_requested": 1000,
+  "bootstrap_seed": 42,
+  "bootstrap_unit": "paired original TEST row",
+  "bootstrap_valid": 1000,
+  "difference_second_minus_first": {
+    "F2": 0.0014582249545149195,
+    "alert_rate": 0.0017749999999999988,
+    "average_precision": -0.0009314246209484178,
+    "roc_auc": -0.0004977040913589637
+  },
+  "first_artefacts_sha256": {
+    "completed.json": "2d855a821ca8561002625d568d34de5d3dcfa54514379a7bd8f85d77ff19c2a3",
+    "config.json": "e1cc39f9e53af17d487d5ed46217a96bc796ac8534fe544e61849ce139137a4f",
+    "metrics_test.json": "da1f67efd3248f9f8f16219ce31582f519730067b555ce045e93b226c51b43ff",
+    "test_row_indices.npy": "153a4f3ec537e7084a6b3efbfd3991bfe548c57fcd60d44ebe682e0059243ae7",
+    "y_test.npy": "d4da3d6a6c62ef54d683eb8837c0d88c54a26ff4fe32d7f8b74ae491201e83fd",
+    "y_test_scores.npy": "2654e3d20000f5aa7b479e7b4e5f2affca74d2eae956208fa6d7abb9c96bc577"
+  },
+  "first_config_sha256": "e1cc39f9e53af17d487d5ed46217a96bc796ac8534fe544e61849ce139137a4f",
+  "first_metrics": {
+    "F2": 0.31588565461428014,
+    "alert_rate": 0.03249,
+    "average_precision": 0.1767959671089727,
+    "roc_auc": 0.8984845868973765
+  },
+  "first_run": "results_revision/20261005/baf_base/lgbm/none/run_20261006_213838_333740",
+  "first_threshold": 0.06362069759967758,
+  "fraud_rows": 2206,
+  "paired_95_percentile_intervals": {
+    "F2": [
+      -0.003906657784867156,
+      0.0062240645957586434
+    ],
+    "alert_rate": [
+      0.0015000000000000013,
+      0.0020549999999999943
+    ],
+    "average_precision": [
+      -0.002871428755468401,
+      0.0011144612350228544
+    ],
+    "roc_auc": [
+      -0.001203749784383007,
+      0.00020520020217205346
+    ]
+  },
+  "policy_selected_using_TEST": false,
+  "rows": 200000,
+  "second_artefacts_sha256": {
+    "completed.json": "2d855a821ca8561002625d568d34de5d3dcfa54514379a7bd8f85d77ff19c2a3",
+    "config.json": "d0c269c356c12ddd1a21eec81cf8a6d06e0e9358df2cfb005dff8b7421382709",
+    "metrics_test.json": "b5cda03a9af79a6ebc10376f9cfbe807be55cc48a343eb724d40566a863da7f9",
+    "test_row_indices.npy": "153a4f3ec537e7084a6b3efbfd3991bfe548c57fcd60d44ebe682e0059243ae7",
+    "y_test.npy": "d4da3d6a6c62ef54d683eb8837c0d88c54a26ff4fe32d7f8b74ae491201e83fd",
+    "y_test_scores.npy": "c4b60b9aaf1c112fefb57b1f02bdf215f006aa42fdd0dd65fda3ac99c50d2871"
+  },
+  "second_config_sha256": "d0c269c356c12ddd1a21eec81cf8a6d06e0e9358df2cfb005dff8b7421382709",
+  "second_metrics": {
+    "F2": 0.31734387956879506,
+    "alert_rate": 0.034265,
+    "average_precision": 0.17586454248802427,
+    "roc_auc": 0.8979868828060176
+  },
+  "second_run": "results_revision/20261005/sensitivity/baf_base/lgbm/none/run_20261007_005248_277073",
+  "second_threshold": 0.06052052373651852,
+  "uncertainty_scope": "Conditional on the two fitted models, fixed DEV thresholds and shared TEST split; not training-seed variability."
+}

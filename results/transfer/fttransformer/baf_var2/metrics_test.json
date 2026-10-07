@@ -1,0 +1,181 @@
+{
+  "artefacts": {
+    "original_test_row_indices.npy": {
+      "array_sha256": "82c0305f31f45d17171d67f906cfe5309825ffcfb4404fb614a3a0d0d4c1e782",
+      "dtype": "int64",
+      "file_sha256": "55e9ddd4b501a9bd5b23f54219d3f13ab5b20dd10c80b21bff1c5e6ca0dca091",
+      "shape": [
+        200000
+      ]
+    },
+    "original_y_test.npy": {
+      "array_sha256": "3148e6f40707b32b25908e824b20342a6d16bdf33e89a0477f42b8e92bf397ad",
+      "dtype": "int64",
+      "file_sha256": "d4da3d6a6c62ef54d683eb8837c0d88c54a26ff4fe32d7f8b74ae491201e83fd",
+      "shape": [
+        200000
+      ]
+    },
+    "original_y_test_scores.npy": {
+      "array_sha256": "92f68916276b95689632f15eb9d8c96d1c223a10906e92255bde9640653e3789",
+      "dtype": "float32",
+      "file_sha256": "c3bb6f63a39962b42ea482b800c737e32a66c2eef33ea5c15ca0d73e7e0e55fe",
+      "shape": [
+        200000
+      ]
+    },
+    "test_row_indices.npy": {
+      "array_sha256": "120457c5912748cc22b7f7d18068c859cad5edb2a3f6f74e414897bbad00ccfc",
+      "dtype": "int64",
+      "file_sha256": "9b1bcc6afa3070f59cf185598eb010b45224388c2ccfd88b7701e033bb2ee94f",
+      "shape": [
+        177531
+      ]
+    },
+    "y_test.npy": {
+      "array_sha256": "d9a9a30346f24343b97c1d93327c907c497b4395b8e60cc1a79cedb43dde2098",
+      "dtype": "int64",
+      "file_sha256": "e47e81a0543c2b859c83e3834af29b2c2ecd50da12ae08313e80f8d0eaaab11b",
+      "shape": [
+        177531
+      ]
+    },
+    "y_test_scores.npy": {
+      "array_sha256": "20ecaaf9a0a4fc00756a771b13372368d92e3c531cad872236bde9447dd6a197",
+      "dtype": "float32",
+      "file_sha256": "077df11517630f6b414c43b8902a3b36fc860e537437b335d6de987a584a12d2",
+      "shape": [
+        177531
+      ]
+    }
+  },
+  "brier_interpretation": "Probability Brier score.",
+  "evaluation_seconds": 63.185096200031694,
+  "excluded_population": {
+    "fraud_prevalence": 0.011126440874093195,
+    "negative_rows": 22219,
+    "positive_rows": 250,
+    "rows": 22469
+  },
+  "historical_original_record": {
+    "role": "historical_unfiltered_population_context_not_retuned",
+    "same_model_checkpoint_as_corrected_transfer": false,
+    "saved_record": {
+      "eval_time_s": 71.68,
+      "metrics": {
+        "F1": 0.186278,
+        "F2": 0.304284,
+        "FN": 1044,
+        "FP": 9108,
+        "FP/TP": 7.8382,
+        "PR-AUC": 0.176988,
+        "ROC-AUC": 0.900482,
+        "TN": 188686,
+        "TP": 1162,
+        "alert_rate": 0.05135,
+        "bootstrap_ci": {
+          "F2_ci": [
+            0.29086,
+            0.316574
+          ],
+          "PR-AUC_ci": [
+            0.160513,
+            0.195005
+          ],
+          "ROC-AUC_ci": [
+            0.894452,
+            0.906589
+          ]
+        },
+        "brier_score": 0.009953,
+        "k_used": 1000,
+        "precision_at_k": 0.338,
+        "recall_at_k": 0.153218,
+        "threshold": 0.058434
+      },
+      "test_fraud": 2206,
+      "test_size": 200000,
+      "threshold_used": 0.058434,
+      "variant_label": "Variant II"
+    },
+    "source_file": "results/baf_base/fttransformer/none/run_20260323_012204/cross_domain.json",
+    "source_file_sha256": "4d99e5b36b6b416e2633fa5f660fed98a85ff8c7aa714f8667dceb5037696739"
+  },
+  "metrics": {
+    "F1": 0.142417,
+    "F2": 0.265485,
+    "FN": 731,
+    "FP": 14022,
+    "FP/TP": 11.4465,
+    "PR-AUC": 0.175089,
+    "ROC-AUC": 0.896402,
+    "TN": 161553,
+    "TP": 1225,
+    "alert_rate": 0.085884,
+    "bootstrap_ci": {
+      "F2_ci": [
+        0.254925,
+        0.276739
+      ],
+      "PR-AUC_ci": [
+        0.158553,
+        0.19243
+      ],
+      "ROC-AUC_ci": [
+        0.889952,
+        0.902999
+      ]
+    },
+    "brier_score": 0.010408,
+    "fraud_prevalence": 0.011017794075400916,
+    "k_used": 887,
+    "precision": 0.08034367416540959,
+    "precision_at_k": 0.334837,
+    "recall": 0.626278118609407,
+    "recall_at_k": 0.15184,
+    "threshold": 0.058434
+  },
+  "metrics_full_precision": {
+    "average_precision": 0.17508866031838427,
+    "roc_auc": 0.8964022433447566,
+    "threshold": 0.05843411013484001
+  },
+  "original_population_same_frozen_model": {
+    "metrics": {
+      "F1": 0.14361,
+      "F2": 0.267506,
+      "FN": 817,
+      "FP": 15749,
+      "FP/TP": 11.3384,
+      "PR-AUC": 0.174274,
+      "ROC-AUC": 0.898014,
+      "TN": 182045,
+      "TP": 1389,
+      "alert_rate": 0.08569,
+      "brier_score": 0.010418,
+      "fraud_prevalence": 0.01103,
+      "k_used": 1000,
+      "precision": 0.08104796358968375,
+      "precision_at_k": 0.333,
+      "recall": 0.6296464188576609,
+      "recall_at_k": 0.150952,
+      "threshold": 0.058434
+    },
+    "metrics_full_precision": {
+      "average_precision": 0.1742738279562799,
+      "roc_auc": 0.8980142609428047,
+      "threshold": 0.05843411013484001
+    },
+    "role": "newly_scored_original_population_not_a_retuned_or_historical_run"
+  },
+  "population": {
+    "fraud_prevalence": 0.011017794075400916,
+    "negative_rows": 175575,
+    "positive_rows": 1956,
+    "rows": 177531
+  },
+  "score_scale": "probability",
+  "threshold_source": "corrected_checkpoint.threshold_full_precision_selected_on_Base_validation",
+  "threshold_used": 0.05843411013484001,
+  "variant_label": "Variant II"
+}

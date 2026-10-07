@@ -1,0 +1,17 @@
+\begin{table}[ht!]
+\centering
+\caption{95\% Bootstrap CI for PR-AUC and ROC-AUC on ULB 2013 (strategy\,=\,None, 1\,000 iterations).}
+\label{tab:ci_ulb}
+\begin{tabular}{l c c c c}
+\toprule
+Model & PR-AUC & 95\% CI & ROC-AUC & 95\% CI \\
+\midrule
+LR         & 0.692 & [0.589, 0.787] & 0.957 & [0.926, 0.982] \\
+RF         & 0.793 & [0.709, 0.874] & 0.929 & [0.889, 0.962] \\
+LGBM       & 0.820 & [0.741, 0.892] & 0.980 & [0.962, 0.993] \\
+CatBoost   & 0.820 & [0.742, 0.892] & 0.980 & [0.966, 0.991] \\
+FT-Trans.  & 0.801 & [0.721, 0.876] & 0.967 & [0.941, 0.990] \\
+OCSVM      & 0.259 & [0.183, 0.363] & 0.922 & [0.879, 0.959] \\
+\bottomrule
+\end{tabular}
+\end{table}

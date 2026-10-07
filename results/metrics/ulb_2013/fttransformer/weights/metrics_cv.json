@@ -1,0 +1,20 @@
+{
+  "note": "Single holdout validation, strategy=weights",
+  "validation": {
+    "F1": 0.872483,
+    "F2": 0.862069,
+    "FN": 11,
+    "FP": 8,
+    "FP/TP": 0.1231,
+    "PR-AUC": 0.870964,
+    "ROC-AUC": 0.965107,
+    "TN": 45312,
+    "TP": 65,
+    "alert_rate": 0.001608,
+    "brier_score": 0.000903,
+    "k_used": 226,
+    "precision_at_k": 0.29646,
+    "recall_at_k": 0.881579,
+    "threshold": 0.97265
+  }
+}

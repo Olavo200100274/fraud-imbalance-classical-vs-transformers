@@ -1,27 +1,29 @@
 """
 SHAP Interpretability Analysis — Fraud Detection Pipeline
 ==========================================================
-Computes SHAP values for trained models on BAF Base and generates
-JSON artefacts consumed by generate_results.py for thesis tables/figures.
+Historical explainer implementations are retained for traceability. The current
+CLI reads explicitly pinned compatible saved matrices and writes revised figures
+and numerical QA only in an isolated output directory; archives are immutable.
 
 Analyses:
   1. Global feature importance (mean |SHAP|, top-K)
   2. Cross-model consistency (Jaccard similarity of top-K features)
   3. Cross-variant stability (LGBM SHAP on BAF Variants I–V)
-  4. Local explanations (representative TP, FP, FN cases)
+  4. Local explanations (selected high-score TP/FP and lowest-score FN cases)
 
 Models:
   - LogReg     → shap.LinearExplainer (fast, exact)
   - LGBM       → shap.TreeExplainer  (fast, exact)
   - CatBoost   → shap.TreeExplainer  (fast, exact)
-  - FT-Trans.  → shap.GradientExplainer (sampled, ~10-20 min)
+FT-Transformer GradientExplainer artefacts cannot reliably attribute categorical
+embedding indices and are excluded from the current primary comparison.
 
 Usage:
-    cd src/
-    python shap_analysis.py                              # all models
-    python shap_analysis.py --models lgbm catboost       # subset
-    python shap_analysis.py --skip-transformer           # skip slow FT-Trans.
-    python shap_analysis.py --skip-variants              # skip cross-variant
+    python src/shap_analysis.py --manifest <revision-manifest.json> \
+        --output-dir <isolated-revision-interpretability-directory>
+
+Use revision_variant_shap.py separately for corrected, explicitly prepared
+Base-DEV-profile-disjoint Variant populations. Neither CLI re-fits a model.
 """
 
 import argparse
@@ -44,7 +46,7 @@ DATASET_LABEL = "baf_base"
 TOP_K = 15
 FT_BACKGROUND_N = 500       # background samples for GradientExplainer
 FT_EXPLAIN_N = 2000         # test samples to explain for FT-Transformer
-SHAP_MODELS = ["logreg", "lgbm", "catboost", "fttransformer"]
+SHAP_MODELS = ["logreg", "lgbm", "catboost"]
 
 TARGET_VARIANTS = {
     "baf_var1": "Variant I",
@@ -61,8 +63,10 @@ def find_latest_run(dataset_label, model_name, strategy="none"):
     base = RESULTS_ROOT / dataset_label / model_name / strategy
     if not base.exists():
         return None
-    runs = sorted(base.iterdir())
-    return runs[-1] if runs else None
+    runs = sorted(path for path in base.iterdir() if path.is_dir() and path.name.startswith("run_"))
+    if len(runs) > 1:
+        raise ValueError(f"Multiple runs at {base}; select the source explicitly")
+    return runs[0] if runs else None
 
 
 def save_json(obj, path):
@@ -251,7 +255,7 @@ def compute_shap_fttransformer(run_dir, X_test, background_n=FT_BACKGROUND_N,
     wrapper = ModelWrapper(model, n_num, n_cat).to(device)
     wrapper.eval()
 
-    # Stratified sample for background and explanation sets
+    # Uniform random background and explanation samples (not stratified).
     rng = np.random.RandomState(42)
     bg_idx = rng.choice(len(X_combined), size=min(background_n, len(X_combined)),
                         replace=False)
@@ -278,7 +282,7 @@ def compute_shap_fttransformer(run_dir, X_test, background_n=FT_BACKGROUND_N,
         shap_values = shap_values.squeeze(-1)
 
     # For FT-Transformer, no one-hot aggregation needed (ordinal encoding)
-    return shap_values, feature_names
+    return shap_values, feature_names, explain_idx
 
 
 # ── Local explanations ───────────────────────────────────────────────────
@@ -332,7 +336,7 @@ def find_representative_cases(y_test, y_scores, threshold, shap_values,
 
 # ── Cross-variant stability ─────────────────────────────────────────────
 
-def compute_variant_shap(lgbm_pipeline, top_k=10):
+def compute_variant_shap(lgbm_pipeline, top_k=10, variant_test_frames=None):
     """
     Compute SHAP feature rankings for LGBM on each BAF Variant test set.
 
@@ -346,7 +350,13 @@ def compute_variant_shap(lgbm_pipeline, top_k=10):
     variant_rankings = {}
 
     # Base reference
-    _, X_test_base, _, _ = load_dataset("baf_base")
+    if variant_test_frames is None:
+        _, X_test_base, _, _ = load_dataset("baf_base")
+    else:
+        expected = {"baf_base", *TARGET_VARIANTS}
+        if set(variant_test_frames) != expected:
+            raise ValueError("Explicit SHAP frames must include Base and all five BAF Variants")
+        X_test_base = variant_test_frames["baf_base"]
     X_base_transformed = preprocessor.transform(X_test_base)
     if hasattr(X_base_transformed, "values"):
         X_base_transformed = X_base_transformed.values
@@ -365,7 +375,10 @@ def compute_variant_shap(lgbm_pipeline, top_k=10):
     # Variants
     for var_key, var_label in TARGET_VARIANTS.items():
         print(f"    {var_label} ...")
-        _, X_test_var, _, _ = load_dataset(var_key)
+        if variant_test_frames is None:
+            _, X_test_var, _, _ = load_dataset(var_key)
+        else:
+            X_test_var = variant_test_frames[var_key]
         X_var_transformed = preprocessor.transform(X_test_var)
         if hasattr(X_var_transformed, "values"):
             X_var_transformed = X_var_transformed.values
@@ -393,7 +406,9 @@ def jaccard(set_a, set_b):
 
 # ── Main ─────────────────────────────────────────────────────────────────
 
-def main():
+def _historical_main():
+    """Retain the old workflow as evidence, not as an archive-writing entry point."""
+    raise RuntimeError("The historical in-place SHAP workflow is disabled; use the explicit revision CLI")
     parser = argparse.ArgumentParser(description="SHAP Interpretability Analysis")
     parser.add_argument("--models", nargs="+", default=None,
                         help="Models to analyse (default: all)")
@@ -403,10 +418,15 @@ def main():
                         help="Skip cross-variant stability analysis")
     parser.add_argument("--top-k", type=int, default=TOP_K,
                         help=f"Number of top features (default: {TOP_K})")
+    parser.add_argument("--allow-exploratory-ft", action="store_true",
+                        help="Explicitly allow gradient artefacts that cannot explain categorical indices")
     args = parser.parse_args()
 
     models = args.models or [m for m in SHAP_MODELS
                              if not (args.skip_transformer and m == "fttransformer")]
+    if "fttransformer" in models and not args.allow_exploratory_ft:
+        parser.error("FT GradientExplainer cannot attribute categorical indices; "
+                     "it is excluded by default and requires --allow-exploratory-ft")
     top_k = args.top_k
 
     print("=" * 60)
@@ -439,7 +459,7 @@ def main():
         t0 = time.time()
 
         if model_name == "fttransformer":
-            shap_values, feature_names = compute_shap_fttransformer(
+            shap_values, feature_names, explain_idx = compute_shap_fttransformer(
                 run_dir, X_test,
                 background_n=FT_BACKGROUND_N, explain_n=FT_EXPLAIN_N,
             )
@@ -456,10 +476,6 @@ def main():
             y_scores = np.load(run_dir / "y_test_scores.npy")
 
             # Local cases (on explained subset)
-            rng = np.random.RandomState(42)
-            explain_idx = rng.choice(len(X_test),
-                                     size=min(FT_EXPLAIN_N, len(X_test)),
-                                     replace=False)
             local_cases = find_representative_cases(
                 y_test, y_scores, threshold, shap_values,
                 feature_names, sample_indices=explain_idx
@@ -512,7 +528,7 @@ def main():
         print(f"{'─' * 60}")
 
         consistency = {}
-        model_list = list(all_rankings.keys())
+        model_list = [model for model in all_rankings if model in SHAP_MODELS]
         for i, m1 in enumerate(model_list):
             for m2 in model_list[i+1:]:
                 j = jaccard(all_rankings[m1], all_rankings[m2])
@@ -588,6 +604,16 @@ def main():
     print(f"\n{'=' * 60}")
     print("  SHAP Analysis Complete!")
     print(f"{'=' * 60}")
+
+
+def main():
+    """Generate compatible figures from pinned saved explanations only."""
+    parser = argparse.ArgumentParser(description="Revision-safe compatible SHAP figure generation")
+    parser.add_argument("--manifest", type=Path, required=True)
+    parser.add_argument("--output-dir", type=Path, required=True)
+    args = parser.parse_args()
+    from generate_revision_interpretability import generate
+    generate(args.manifest, args.output_dir)
 
 
 if __name__ == "__main__":

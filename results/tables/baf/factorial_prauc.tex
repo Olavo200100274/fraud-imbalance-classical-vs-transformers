@@ -1,0 +1,16 @@
+\begin{table}[ht!]
+\centering
+\caption{PR-AUC by model $\times$ strategy on BAF Base.}
+\label{tab:factorial_baf_prauc}
+\begin{tabular}{l c c c c c c c}
+\toprule
+Model & None & RUS & ROS & SMOTE & SM+T & SMOTEENN & Weights \\
+\midrule
+LR         & \textbf{0.143} & 0.137 & 0.137 & 0.135 & 0.135 & 0.136 & 0.122 \\
+RF         & \textbf{0.159} & 0.135 & 0.149 & 0.120 & 0.120 & 0.124 & 0.146 \\
+LGBM       & 0.177 & 0.171 & \textbf{0.181} & 0.146 & 0.146 & 0.158 & 0.181 \\
+CatBoost   & 0.180 & 0.178 & \textbf{0.185} & 0.154 & 0.154 & 0.165 & 0.184 \\
+FT-Trans.  & \textbf{0.177} & 0.163 & 0.166 & 0.115 & 0.115 & 0.124 & 0.176 \\
+\bottomrule
+\end{tabular}
+\end{table}

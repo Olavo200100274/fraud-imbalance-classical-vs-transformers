@@ -1,0 +1,68 @@
+{
+  "bootstrap_requested": 1000,
+  "bootstrap_seed": 42,
+  "bootstrap_unit": "paired original TEST row",
+  "bootstrap_valid": 1000,
+  "difference_second_minus_first": {
+    "F2": 0.004226466652599958,
+    "alert_rate": -0.0039049999999999987,
+    "average_precision": 0.004515250753312217,
+    "roc_auc": 0.009046244262795211
+  },
+  "first_artefacts_sha256": {
+    "completed.json": "2d855a821ca8561002625d568d34de5d3dcfa54514379a7bd8f85d77ff19c2a3",
+    "config.json": "9b1b1866996dc617a88d6c9282044fa8331e5c3eb2c6dc3aa2f8310c4f07e350",
+    "metrics_test.json": "271e1dc857e04bb2011eb74267336773ad7c58d89d6b7018fe45971f3e6d501e",
+    "test_row_indices.npy": "153a4f3ec537e7084a6b3efbfd3991bfe548c57fcd60d44ebe682e0059243ae7",
+    "y_test.npy": "d4da3d6a6c62ef54d683eb8837c0d88c54a26ff4fe32d7f8b74ae491201e83fd",
+    "y_test_scores.npy": "cc4d9f45879ff28eb532062013753c7381dfce5c66cb592ec82847967a5fca0e"
+  },
+  "first_config_sha256": "9b1b1866996dc617a88d6c9282044fa8331e5c3eb2c6dc3aa2f8310c4f07e350",
+  "first_metrics": {
+    "F2": 0.28679179091387474,
+    "alert_rate": 0.041395,
+    "average_precision": 0.1432312582410749,
+    "roc_auc": 0.874511148081196
+  },
+  "first_run": "results_revision/20261005/baf_base/logreg/none/run_20261006_214833_164469",
+  "first_threshold": 0.05271516125129787,
+  "fraud_rows": 2206,
+  "paired_95_percentile_intervals": {
+    "F2": [
+      -0.0007843738508731893,
+      0.009610628957736712
+    ],
+    "alert_rate": [
+      -0.0043249999999999955,
+      -0.003499875000000003
+    ],
+    "average_precision": [
+      0.0017369719988176776,
+      0.007376017472073502
+    ],
+    "roc_auc": [
+      0.006712909421765362,
+      0.011342663370408216
+    ]
+  },
+  "policy_selected_using_TEST": false,
+  "rows": 200000,
+  "second_artefacts_sha256": {
+    "completed.json": "2d855a821ca8561002625d568d34de5d3dcfa54514379a7bd8f85d77ff19c2a3",
+    "config.json": "215ba0d45a01491863cfc075d754e5cacc8c0cc4b99aafe465e0358aaee5812f",
+    "metrics_test.json": "cad2f5cb7211c648c512c9837cdbc9ca6cc3eacd8ccb5cbbaa97aa98c18c949f",
+    "test_row_indices.npy": "153a4f3ec537e7084a6b3efbfd3991bfe548c57fcd60d44ebe682e0059243ae7",
+    "y_test.npy": "d4da3d6a6c62ef54d683eb8837c0d88c54a26ff4fe32d7f8b74ae491201e83fd",
+    "y_test_scores.npy": "d2d73a6d8a3ae7ec54a3348cdd025b0a49eeac49b3885526c704d0c702edf561"
+  },
+  "second_config_sha256": "215ba0d45a01491863cfc075d754e5cacc8c0cc4b99aafe465e0358aaee5812f",
+  "second_metrics": {
+    "F2": 0.2910182575664747,
+    "alert_rate": 0.03749,
+    "average_precision": 0.14774650899438713,
+    "roc_auc": 0.8835573923439912
+  },
+  "second_run": "results_revision/20261005/sensitivity/baf_base/logreg/none/run_20261007_014045_236128",
+  "second_threshold": 0.058258423880592165,
+  "uncertainty_scope": "Conditional on the two fitted models, fixed DEV thresholds and shared TEST split; not training-seed variability."
+}

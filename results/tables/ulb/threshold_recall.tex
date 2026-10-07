@@ -1,0 +1,17 @@
+\begin{table}[ht!]
+\centering
+\caption{Threshold sensitivity on ULB 2013~--- Recall by threshold strategy (strategy\,=\,None).}
+\label{tab:threshold_ulb_recall}
+\begin{tabular}{l c c c c}
+\toprule
+Model & Fixed (0.5) & max-$F_1$ & max-$F_2$ & Prec\,$\geq$\,0.5 \\
+\midrule
+LR         & 0.579 & 0.758 & 0.758 & 0.789 \\
+RF         & 0.737 & 0.747 & 0.768 & 0.789 \\
+LGBM       & 0.726 & 0.737 & 0.789 & 0.821 \\
+CatBoost   & 0.747 & 0.747 & 0.747 & 0.821 \\
+FT-Trans.  & 0.737 & 0.726 & 0.737 & 0.768 \\
+OCSVM      & 0.758 & 0.568 & 0.632 & 0.463 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,17 @@
+\begin{table}[ht!]
+\centering
+\caption{95\% Bootstrap CI for PR-AUC and ROC-AUC on BAF Base (strategy\,=\,None, 1\,000 iterations).}
+\label{tab:ci_baf}
+\begin{tabular}{l c c c c}
+\toprule
+Model & PR-AUC & 95\% CI & ROC-AUC & 95\% CI \\
+\midrule
+LR         & 0.143 & [0.131, 0.158] & 0.875 & [0.867, 0.882] \\
+RF         & 0.159 & [0.145, 0.175] & 0.878 & [0.870, 0.885] \\
+LGBM       & 0.177 & [0.162, 0.194] & 0.898 & [0.892, 0.905] \\
+CatBoost   & 0.180 & [0.164, 0.197] & 0.898 & [0.892, 0.904] \\
+FT-Trans.  & 0.177 & [0.162, 0.195] & 0.896 & [0.890, 0.903] \\
+OCSVM      & 0.019 & [0.018, 0.021] & 0.628 & [0.616, 0.639] \\
+\bottomrule
+\end{tabular}
+\end{table}

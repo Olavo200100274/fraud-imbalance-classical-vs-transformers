@@ -1,0 +1,17 @@
+\begin{table}[ht!]
+\centering
+\caption{Threshold sensitivity on BAF Base~--- $F_2$ by threshold strategy (strategy\,=\,None).}
+\label{tab:threshold_baf_f2}
+\begin{tabular}{l c c c c}
+\toprule
+Model & Fixed (0.5) & max-$F_1$ & max-$F_2$ & Prec\,$\geq$\,0.5 \\
+\midrule
+LR         & 0.015 & 0.245 & 0.287 & 0.032 \\
+RF         & 0.001 & 0.263 & 0.294 & 0.045 \\
+LGBM       & 0.042 & 0.260 & 0.316 & 0.056 \\
+CatBoost   & 0.037 & 0.274 & 0.314 & 0.058 \\
+FT-Trans.  & 0.048 & 0.293 & 0.304 & 0.133 \\
+OCSVM      & 0.031 & 0.071 & 0.081 & 0.000 \\
+\bottomrule
+\end{tabular}
+\end{table}

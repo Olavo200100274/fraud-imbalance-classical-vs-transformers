@@ -1,0 +1,62 @@
+\paragraph{Predefined BAF sensitivity controls.}
+The following controls are separate from the primary factorial matrix. They compare predefined alternatives on the same original BAF Base TEST observations, with hyperparameters held fixed within each pair and each member's operating threshold frozen from DEV. AP denotes average precision (reported elsewhere as PR-AUC). Positive differences favour the second member only for the displayed metric; no policy is selected using TEST.
+
+\begin{table}[htbp]
+\centering
+\caption{Predefined BAF absence-code sensitivity: preserved codes versus NaN conversion with missingness indicators. Differences are NaN-and-indicators minus preserve; intervals come from 1,000 requested row-paired bootstrap resamples.}
+\label{tab:baf_missingness_sensitivity}
+\begingroup\small
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{@{}p{26mm}p{12mm}p{18mm}p{23mm}p{55mm}@{}}
+\toprule
+Model & Metric & Preserve & NaN + indicators & $\Delta$ [paired 95\% CI] \\
+\midrule
+Logistic Regression & AP & 0.1432 & 0.1477 & $+0.0045\;[+0.0017,\,+0.0074]$ \\
+ & $F_2$ & 0.2868 & 0.2910 & $+0.0042\;[-0.0008,\,+0.0096]$ \\
+\addlinespace[3pt]
+Random Forest & AP & 0.1588 & 0.1596 & $+0.0008\;[-0.0015,\,+0.0030]$ \\
+ & $F_2$ & 0.2941 & 0.2931 & $-0.0010\;[-0.0061,\,+0.0044]$ \\
+\addlinespace[3pt]
+LGBM & AP & 0.1768 & 0.1759 & $-0.0009\;[-0.0029,\,+0.0011]$ \\
+ & $F_2$ & 0.3159 & 0.3173 & $+0.0015\;[-0.0039,\,+0.0062]$ \\
+\addlinespace[3pt]
+CatBoost & AP & 0.1796 & 0.1790 & $-0.0005\;[-0.0023,\,+0.0015]$ \\
+ & $F_2$ & 0.3143 & 0.3126 & $-0.0017\;[-0.0063,\,+0.0031]$ \\
+\addlinespace[3pt]
+FT-Transformer & AP & 0.1769 & 0.1732 & $-0.0038\;[-0.0082,\,+0.0006]$ \\
+ & $F_2$ & 0.3041 & 0.3026 & $-0.0016\;[-0.0068,\,+0.0034]$ \\
+\addlinespace[3pt]
+OCSVM & AP & 0.0190 & 0.0162 & $-0.0028\;[-0.0035,\,-0.0024]$ \\
+ & $F_2$ & 0.0805 & 0.0679 & $-0.0126\;[-0.0166,\,-0.0087]$ \\
+\bottomrule
+\end{tabular}
+\endgroup
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Predefined BAF categorical-sampling controls: primary SMOTE versus SMOTE-NC. Differences are SMOTE-NC minus primary SMOTE; intervals come from 1,000 requested row-paired bootstrap resamples.}
+\label{tab:baf_smotenc_control}
+\begingroup\small
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{@{}p{26mm}p{12mm}p{18mm}p{23mm}p{55mm}@{}}
+\toprule
+Model & Metric & SMOTE & SMOTE-NC & $\Delta$ [paired 95\% CI] \\
+\midrule
+CatBoost & AP & 0.1543 & 0.1433 & $-0.0110\;[-0.0147,\,-0.0074]$ \\
+ & $F_2$ & 0.3029 & 0.2856 & $-0.0173\;[-0.0233,\,-0.0108]$ \\
+\addlinespace[3pt]
+FT-Transformer & AP & 0.1149 & 0.1157 & $+0.0008\;[-0.0068,\,+0.0076]$ \\
+ & $F_2$ & 0.2567 & 0.2577 & $+0.0010\;[-0.0088,\,+0.0111]$ \\
+\bottomrule
+\end{tabular}
+\endgroup
+\end{table}
+
+The reported 95\% intervals describe TEST-row uncertainty conditional on the two fitted models, their frozen thresholds and the shared split, not training-seed variability. Single-class bootstrap resamples are excluded. Points, differences and interval bounds are rounded to four decimal places for display. An interval containing zero does not establish equivalence, and these controls do not establish causality. The missingness comparison changes conversion, imputation and indicators jointly; the categorical control changes the sampling representation and nominal-aware resampling, not an isolated architectural component. CatBoost still receives one-hot encoded classifier inputs rather than native categorical inputs.
+
+For primary CatBoost SMOTE, the historical operating threshold is retained at its archived six-decimal precision, and the saved TEST confusion counts must be reproduced. A more precise historical threshold is not reconstructed or assumed.
+
+The historical CatBoost primary did not save explicit TEST row indices. Its pairing uses the verified raw-file identity, the documented seed-42 split and exactly matched ordered TEST labels; no historical index artefact is invented.

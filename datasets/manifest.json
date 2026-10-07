@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "study": "MSc dissertation, corrected October 2026 evidence",
+  "hash_scope": "exact raw CSV file bytes before preprocessing",
+  "files": [
+    {"name": "creditcard_2013.csv", "bytes": 150828752, "sha256": "76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89", "source": "https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud"},
+    {"name": "Base.csv", "bytes": 213427735, "sha256": "7bf10a37ce07e72e14c1b09e5efee3d27261baff4facc7da767b0474dcf9b809", "source": "https://github.com/feedzai/bank-account-fraud"},
+    {"name": "Variant I.csv", "bytes": 213400445, "sha256": "48c637a255d1fa4515da4286ccb99251412a6d905937ec7c108838ddfc1674bd", "source": "https://github.com/feedzai/bank-account-fraud"},
+    {"name": "Variant II.csv", "bytes": 213537521, "sha256": "60bcd971cf28779abb183c3286990cff9a87275bd8b83d9f6054a396c95cc736", "source": "https://github.com/feedzai/bank-account-fraud"},
+    {"name": "Variant III.csv", "bytes": 252204320, "sha256": "64693e549cff7ef802cf043fc7c937839e5929966e33a0852953b3f4c4321339", "source": "https://github.com/feedzai/bank-account-fraud"},
+    {"name": "Variant IV.csv", "bytes": 213538370, "sha256": "c6cddebbad34fa262a278deeb7985e7b669a64308d26e480d8eb85bfd08dac75", "source": "https://github.com/feedzai/bank-account-fraud"},
+    {"name": "Variant V.csv", "bytes": 252214315, "sha256": "470899bbef97c32a100528d63e863e1b1036df9501df6ef8140e7ec13b7365b4", "source": "https://github.com/feedzai/bank-account-fraud"}
+  ]
+}

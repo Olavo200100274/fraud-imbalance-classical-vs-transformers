@@ -9,7 +9,6 @@ def get_pipeline_and_params(preprocessor):
     - learning_rate: log-uniform [0.005, 0.3] — step size shrinkage.
     - depth: [4, 10] — tree depth.
     - l2_leaf_reg: log-uniform [0.1, 10] — L2 regularisation.
-    - min_data_in_leaf: [1, 100] — min samples in leaf.
 
     iterations is set high (2000); actual count determined by
     early stopping during Optuna tuning.
@@ -25,7 +24,6 @@ def get_pipeline_and_params(preprocessor):
             "classifier__learning_rate": trial.suggest_float("learning_rate", 0.005, 0.3, log=True),
             "classifier__depth": trial.suggest_int("depth", 4, 10),
             "classifier__l2_leaf_reg": trial.suggest_float("l2_leaf_reg", 0.1, 10.0, log=True),
-            "classifier__min_data_in_leaf": trial.suggest_int("min_data_in_leaf", 1, 100),
         }
 
     return pipeline, suggest_params

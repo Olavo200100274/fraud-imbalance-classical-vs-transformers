@@ -11,7 +11,6 @@ def get_pipeline_and_params(preprocessor):
     - min_child_samples: [5, 100] — min data in a leaf.
     - reg_alpha: log-uniform [1e-8, 10] — L1 regularisation.
     - reg_lambda: log-uniform [1e-8, 10] — L2 regularisation.
-    - subsample: [0.5, 1.0] — row subsampling per tree.
     - colsample_bytree: [0.5, 1.0] — column subsampling per tree.
 
     n_estimators is set high (2000); actual count determined by
@@ -30,7 +29,6 @@ def get_pipeline_and_params(preprocessor):
             "classifier__min_child_samples": trial.suggest_int("min_child_samples", 5, 100),
             "classifier__reg_alpha": trial.suggest_float("reg_alpha", 1e-8, 10.0, log=True),
             "classifier__reg_lambda": trial.suggest_float("reg_lambda", 1e-8, 10.0, log=True),
-            "classifier__subsample": trial.suggest_float("subsample", 0.5, 1.0),
             "classifier__colsample_bytree": trial.suggest_float("colsample_bytree", 0.5, 1.0),
         }
 

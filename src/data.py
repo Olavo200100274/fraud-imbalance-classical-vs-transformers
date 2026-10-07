@@ -1,200 +1,177 @@
+"""Deterministic loading with exact-profile deduplication before ULB splits.
+
+BAF retains the historical random split and numerical absence sentinels.
+Original CSV row positions are preserved in optional provenance metadata.
 """
-Data loading module — supports multiple fraud detection datasets.
-
-Each loader returns (X_train, X_test, y_train, y_test) after a
-stratified 80/20 split with random_state=42.
-
-An optional ``sample`` parameter (0 < sample <= 1) takes a
-stratified subsample of the full dataset **before** splitting,
-useful for smoke-testing the pipeline on large datasets.
-"""
-
 from pathlib import Path
-
+import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
+from experiment_protocol import array_sha256, file_sha256, PROTOCOL_VERSION
 
 SPLIT_SEED = 42
-# Project root — one level above src/
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
-
-# ── Dataset registry ──────────────────────────────────────────────────────
 DATASET_REGISTRY = {}
 
 
 def _register(name, csv_path, label):
-    """Decorator that registers a dataset loader."""
     def decorator(fn):
-        DATASET_REGISTRY[name] = {
-            "loader": fn,
-            "csv_path": csv_path,
-            "label": label,
-        }
+        DATASET_REGISTRY[name] = {"loader": fn, "csv_path": csv_path, "label": label}
         return fn
     return decorator
 
 
-def load_dataset(name, sample=None):
-    """
-    Load a dataset by name.
+def deduplicate_predictors(frame, target):
+    """Keep the first exact predictor profile and reject conflicting labels."""
+    predictors = [c for c in frame.columns if c != target]
+    repeated = frame.duplicated(subset=predictors, keep=False)
+    if repeated.any():
+        conflicts = frame.loc[repeated].groupby(
+            predictors, sort=False, dropna=False
+        )[target].nunique(dropna=False)
+        if (conflicts > 1).any():
+            raise ValueError("Identical predictor profiles have conflicting labels.")
+    kept = ~frame.duplicated(subset=predictors, keep="first")
+    audit = {
+        "policy": "exact_predictor_deduplication_before_all_splits",
+        "raw_rows": int(len(frame)),
+        "raw_positive_rows": int(frame[target].sum()),
+        "retained_rows": int(kept.sum()),
+        "retained_positive_rows": int(frame.loc[kept, target].sum()),
+        "removed_rows": int((~kept).sum()),
+        "removed_positive_rows": int(frame.loc[~kept, target].sum()),
+        "predictor_columns": predictors,
+        "conflicting_label_profiles": 0,
+    }
+    return frame.loc[kept].copy(), audit
 
-    Parameters
-    ----------
-    name : str
-        Registered dataset key (e.g. 'ulb', 'baf_base').
-    sample : float or None
-        If provided (0 < sample <= 1), take a stratified subsample of the
-        full dataset before the train/test split.  Useful for smoke tests.
 
-    Returns
-    -------
-    X_train, X_test, y_train, y_test
-    """
+def _split_frame(frame, target, *, deduplicate=False, sample=None):
+    """Split eligible rows without fitting; retain original row positions."""
+    if frame.isna().to_numpy().any():
+        raise ValueError("The raw dataset contains unexpected NaN values.")
+    if not frame.index.is_unique:
+        raise ValueError("Raw CSV row positions must be unique.")
+    if set(frame[target].unique()) != {0, 1}:
+        raise ValueError("The target must contain binary classes 0 and 1.")
+    if sample is not None and not 0 < sample <= 1:
+        raise ValueError("sample must lie in (0, 1].")
+    if deduplicate:
+        frame, audit = deduplicate_predictors(frame, target)
+    else:
+        audit = {
+            "policy": "no_row_removal_historical_baf_split",
+            "raw_rows": len(frame), "retained_rows": len(frame),
+            "raw_positive_rows": int(frame[target].sum()),
+            "retained_positive_rows": int(frame[target].sum()),
+            "removed_rows": 0, "removed_positive_rows": 0,
+        }
+    if sample is not None and sample < 1:
+        minimum_size = int(np.ceil(10 / frame[target].mean()))
+        n_sample = min(len(frame), max(100, int(len(frame) * sample), minimum_size))
+        if n_sample < len(frame):
+            frame, _ = train_test_split(
+                frame, train_size=n_sample, stratify=frame[target],
+                random_state=SPLIT_SEED,
+            )
+    X, y = frame.drop(columns=target), frame[target]
+    X_dev, X_test, y_dev, y_test = train_test_split(
+        X, y, test_size=0.2, stratify=y, random_state=SPLIT_SEED,
+    )
+    dev_indices = X_dev.index.to_numpy(dtype=np.int64)
+    test_indices = X_test.index.to_numpy(dtype=np.int64)
+    if np.intersect1d(dev_indices, test_indices).size:
+        raise AssertionError("DEV and TEST have overlapping original row positions.")
+    metadata = {
+        "protocol_version": PROTOCOL_VERSION, "split_seed": SPLIT_SEED,
+        "split_ratio": "80/20 stratified", "sample_fraction": sample,
+        "deduplication": audit, "eligible_rows": len(frame),
+        "eligible_positive_rows": int(y.sum()), "feature_columns": list(X.columns),
+        "dev_indices": dev_indices, "test_indices": test_indices,
+        "dev_indices_sha256": array_sha256(dev_indices),
+        "test_indices_sha256": array_sha256(test_indices),
+    }
+    return X_dev, X_test, y_dev, y_test, metadata
+
+
+def _load_csv(csv_path, target, *, drop_columns=(), deduplicate=False,
+              sample=None, return_metadata=False):
+    frame = pd.read_csv(csv_path).drop(columns=list(drop_columns))
+    output = _split_frame(frame, target, deduplicate=deduplicate, sample=sample)
+    output[-1].update({
+        "raw_file": str(Path(csv_path).resolve()),
+        "raw_file_sha256": file_sha256(csv_path),
+        "excluded_columns": list(drop_columns),
+        "missing_value_policy": (
+            "numeric_sentinels_preserved" if target == "fraud_bool"
+            else "no_missing_values_observed"
+        ),
+    })
+    return output if return_metadata else output[:4]
+
+
+def load_dataset(name, sample=None, return_metadata=False):
+    """Return four split objects, optionally followed by provenance metadata."""
     if name not in DATASET_REGISTRY:
-        raise ValueError(
-            f"Unknown dataset '{name}'. "
-            f"Available: {list(DATASET_REGISTRY.keys())}"
-        )
-    entry = DATASET_REGISTRY[name]
-    X_train, X_test, y_train, y_test = entry["loader"]()
-
-    # ── Optional stratified subsample ─────────────────────────────────
-    if sample is not None and sample < 1.0:
-        import numpy as np
-        # Recombine, subsample, re-split — preserves stratification
-        X_all = pd.concat([X_train, X_test], axis=0)
-        y_all = pd.concat([y_train, y_test], axis=0)
-
-        n_sample = max(100, int(len(X_all) * sample))
-
-        # Guarantee enough fraud cases for 5-fold CV (≥ 2 per fold = 10 min)
-        fraud_rate = y_all.mean()
-        min_fraud_needed = 10  # ≥ 2 per fold with CV=5
-        min_n_for_fraud = int(np.ceil(min_fraud_needed / fraud_rate))
-        n_sample = max(n_sample, min(min_n_for_fraud, len(X_all)))
-
-        X_all, _, y_all, _ = train_test_split(
-            X_all, y_all,
-            train_size=n_sample,
-            stratify=y_all,
-            random_state=SPLIT_SEED,
-        )
-        X_train, X_test, y_train, y_test = train_test_split(
-            X_all, y_all,
-            test_size=0.2,
-            stratify=y_all,
-            random_state=SPLIT_SEED,
-        )
-        print(f"  [--sample {sample}] Subsampled to {len(X_all):,} rows "
-              f"({y_all.sum()} fraud, {y_all.mean():.2%} prevalence)")
-
-    return X_train, X_test, y_train, y_test
+        raise ValueError(f"Unknown dataset {name!r}; available: {list(DATASET_REGISTRY)}")
+    return DATASET_REGISTRY[name]["loader"](
+        sample=sample, return_metadata=return_metadata,
+    )
 
 
 def get_dataset_info(name):
-    """Return (csv_path, label) for a registered dataset."""
     entry = DATASET_REGISTRY[name]
     return entry["csv_path"], entry["label"]
 
 
-# ── ULB Credit Card 2013 ─────────────────────────────────────────────────
-
-@_register("ulb", str(_PROJECT_ROOT / "datasets" / "creditcard_2013.csv"), "ulb_2013")
-def load_ulb_data():
-    """Load ULB Credit Card 2013 dataset (284 807 rows, 0.17% fraud)."""
-    df = pd.read_csv(_PROJECT_ROOT / "datasets" / "creditcard_2013.csv")
-    assert df.isnull().sum().sum() == 0, "Dataset contém valores ausentes."
-
-    X = df.drop(columns="Class")
-    y = df["Class"]
-
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, stratify=y, random_state=SPLIT_SEED
+@_register("ulb", str(_PROJECT_ROOT / "datasets/creditcard_2013.csv"), "ulb_2013")
+def load_ulb_data(sample=None, return_metadata=False):
+    """Remove exact predictor repetitions before all ULB split boundaries."""
+    return _load_csv(
+        _PROJECT_ROOT / "datasets/creditcard_2013.csv", "Class",
+        deduplicate=True, sample=sample, return_metadata=return_metadata,
     )
-    return X_train, X_test, y_train, y_test
 
 
-# ── BAF Base (NeurIPS 2022) ──────────────────────────────────────────────
-
-@_register("baf_base", str(_PROJECT_ROOT / "datasets" / "Base.csv"), "baf_base")
-def load_baf_base_data():
-    """
-    Load BAF Base dataset (1 000 000 rows, ~1.1% fraud).
-
-    Drops ``month`` — temporal metadata from the CTGAN generation process,
-    not a real applicant feature.  Retaining it would let the model exploit
-    an artefact of data synthesis rather than genuine fraud patterns.
-    The ``source`` column is kept as a legitimate categorical feature.
-    """
-    df = pd.read_csv(_PROJECT_ROOT / "datasets" / "Base.csv")
-    assert df.isnull().sum().sum() == 0, "Dataset contém valores ausentes."
-
-    df = df.drop(columns=["month"])
-
-    X = df.drop(columns="fraud_bool")
-    y = df["fraud_bool"]
-
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, stratify=y, random_state=SPLIT_SEED
+@_register("baf_base", str(_PROJECT_ROOT / "datasets/Base.csv"), "baf_base")
+def load_baf_base_data(sample=None, return_metadata=False):
+    """Keep the historical pooled-month split, without month as a predictor."""
+    return _load_csv(
+        _PROJECT_ROOT / "datasets/Base.csv", "fraud_bool", drop_columns=("month",),
+        sample=sample, return_metadata=return_metadata,
     )
-    return X_train, X_test, y_train, y_test
 
 
-# ── BAF Variants I–V (NeurIPS 2022) ─────────────────────────────────────
-
-def _load_baf_variant(csv_name, drop_extra_cols=False):
-    """
-    Shared loader for BAF Variant datasets.
-
-    Parameters
-    ----------
-    csv_name : str
-        CSV filename under datasets/ (e.g. "Variant I.csv").
-    drop_extra_cols : bool
-        If True, drop columns ``x1`` and ``x2`` present in Variants III & V
-        to maintain 32-column alignment with BAF Base.
-    """
-    df = pd.read_csv(_PROJECT_ROOT / "datasets" / csv_name)
-    assert df.isnull().sum().sum() == 0, f"{csv_name}: unexpected null values."
-
-    df = df.drop(columns=["month"])
-    if drop_extra_cols:
-        df = df.drop(columns=["x1", "x2"])
-
-    X = df.drop(columns="fraud_bool")
-    y = df["fraud_bool"]
-
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, stratify=y, random_state=SPLIT_SEED
+def _load_baf_variant(csv_name, drop_extra_cols=False, sample=None,
+                      return_metadata=False):
+    """Project each Variant onto the shared Base predictor schema."""
+    excluded = ("month", "x1", "x2") if drop_extra_cols else ("month",)
+    return _load_csv(
+        _PROJECT_ROOT / "datasets" / csv_name, "fraud_bool", drop_columns=excluded,
+        sample=sample, return_metadata=return_metadata,
     )
-    return X_train, X_test, y_train, y_test
 
 
-@_register("baf_var1", str(_PROJECT_ROOT / "datasets" / "Variant I.csv"), "baf_var1")
-def load_baf_var1():
-    """Load BAF Variant I — covariate shift."""
-    return _load_baf_variant("Variant I.csv")
+@_register("baf_var1", str(_PROJECT_ROOT / "datasets/Variant I.csv"), "baf_var1")
+def load_baf_var1(sample=None, return_metadata=False):
+    return _load_baf_variant("Variant I.csv", sample=sample, return_metadata=return_metadata)
 
 
-@_register("baf_var2", str(_PROJECT_ROOT / "datasets" / "Variant II.csv"), "baf_var2")
-def load_baf_var2():
-    """Load BAF Variant II — label shift."""
-    return _load_baf_variant("Variant II.csv")
+@_register("baf_var2", str(_PROJECT_ROOT / "datasets/Variant II.csv"), "baf_var2")
+def load_baf_var2(sample=None, return_metadata=False):
+    return _load_baf_variant("Variant II.csv", sample=sample, return_metadata=return_metadata)
 
 
-@_register("baf_var3", str(_PROJECT_ROOT / "datasets" / "Variant III.csv"), "baf_var3")
-def load_baf_var3():
-    """Load BAF Variant III — covariate shift + new features (x1, x2 dropped)."""
-    return _load_baf_variant("Variant III.csv", drop_extra_cols=True)
+@_register("baf_var3", str(_PROJECT_ROOT / "datasets/Variant III.csv"), "baf_var3")
+def load_baf_var3(sample=None, return_metadata=False):
+    return _load_baf_variant("Variant III.csv", True, sample=sample, return_metadata=return_metadata)
 
 
-@_register("baf_var4", str(_PROJECT_ROOT / "datasets" / "Variant IV.csv"), "baf_var4")
-def load_baf_var4():
-    """Load BAF Variant IV — bias conditions."""
-    return _load_baf_variant("Variant IV.csv")
+@_register("baf_var4", str(_PROJECT_ROOT / "datasets/Variant IV.csv"), "baf_var4")
+def load_baf_var4(sample=None, return_metadata=False):
+    return _load_baf_variant("Variant IV.csv", sample=sample, return_metadata=return_metadata)
 
 
-@_register("baf_var5", str(_PROJECT_ROOT / "datasets" / "Variant V.csv"), "baf_var5")
-def load_baf_var5():
-    """Load BAF Variant V — bias + new features (x1, x2 dropped)."""
-    return _load_baf_variant("Variant V.csv", drop_extra_cols=True)
+@_register("baf_var5", str(_PROJECT_ROOT / "datasets/Variant V.csv"), "baf_var5")
+def load_baf_var5(sample=None, return_metadata=False):
+    return _load_baf_variant("Variant V.csv", True, sample=sample, return_metadata=return_metadata)

@@ -1,0 +1,23 @@
+{
+  "in_flight_invocations_before_launch_snapshot_support": [
+    {
+      "hpo_persistence": "This first invocation uses an in-memory Optuna study, without the later SQLite/sampler-checkpoint support. Completion requires all 50 terminal trial records in the saved artefacts. An interruption before saving would require a fresh complete study, not an asserted checkpoint resume.",
+      "log": "results_revision/20261005/logs/transformer_ulb_2013_fttransformer_none_20261005_215226.log",
+      "physical_launch_source_snapshot_available": false,
+      "qualification": "Operational guards, resume metadata and completion-marker handling were hardened on disk while this process retained its earlier loaded modules. The mathematical fitting, trial seeds, validation selection and learning-rate schedule were not changed by this hardening. Saved scores/checkpoints must still pass numerical and protocol verification. No approximate reconstruction is presented as an exact launch snapshot.",
+      "role": "corrected ULB FT-Transformer baseline",
+      "started_at_utc": "2026-10-05T21:52:26Z"
+    },
+    {
+      "log": "results_revision/20261005/logs/classical_ulb_2013_lgbm_none_20261005_215820.log",
+      "physical_launch_source_snapshot_available": false,
+      "qualification": "The first three completed trials and the latest valid TPE state were recovered. The explicit SQLite checkpoint identifies the resumed study. Subsequent source snapshots cannot retrospectively certify this invocation's launch state; its stored trial records and protocol evidence remain subject to QA.",
+      "role": "corrected ULB LightGBM baseline, resumed after checkpoint write failure",
+      "started_at_utc": "2026-10-05T21:58:20Z",
+      "tuning_cost_scope": "The saved tuning_time_s measures the resumed invocation, not the entire wall time of all 50 trials across invocations. Cost reporting must identify it as partial wall time rather than a directly comparable full-search measurement."
+    }
+  ],
+  "recorded_on": "2026-10-05",
+  "source_hash_interpretation": "Source hashes observed when saving a run describe files on disk at that time. They are not, by themselves, proof of the exact code loaded earlier by a long-running Python process.",
+  "subsequent_invocations": "Capture an immutable source archive and hashes at main-entry launch; keep launch and save-time provenance separate."
+}

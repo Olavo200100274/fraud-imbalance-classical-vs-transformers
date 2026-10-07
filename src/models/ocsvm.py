@@ -8,11 +8,11 @@ def get_pipeline_and_params(preprocessor):
     OCSVM is an anomaly-detection baseline:
     - Trained only on class-0 (legitimate) samples.
     - Uses negated decision_function for scoring (higher = more anomalous).
-    - nu upper-bounds the fraction of training errors / support vectors;
-      values close to the true fraud rate (≈0.17 %) are tested.
+    - nu upper-bounds the fraction of training errors and lower-bounds the
+      fraction of support vectors; its fixed value here is 0.01.
     - gamma controls the RBF kernel width.
-    - No grid search (fixed config) because OCSVM does not support CV
-      scoring in the standard supervised sense.
+    - No hyperparameter search is conducted. Five-fold held-out validation
+      still uses both labels to calibrate the anomaly-score threshold.
     """
     pipeline = Pipeline([
         ('preprocessor', preprocessor),

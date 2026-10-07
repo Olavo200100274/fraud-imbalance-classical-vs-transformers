@@ -1,0 +1,28 @@
+{
+  "best_params": {
+    "classifier__max_depth": 40,
+    "classifier__min_samples_leaf": 7,
+    "classifier__min_samples_split": 13,
+    "classifier__n_estimators": 500
+  },
+  "best_params_source": "loaded from baseline run (no re-tuning)",
+  "cv_folds": 5,
+  "dataset": "baf_base",
+  "dataset_file": "[external local path omitted]",
+  "dataset_hash_sha256": "7bf10a37ce07e72e14c1b09e5efee3d27261baff4facc7da767b0474dcf9b809",
+  "infer_time_s": 17.0984,
+  "model": "rf",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python_version": "3.12.7 (tags/v3.12.7:0b05ead, Oct  1 2024, 03:06:41) [MSC v.1941 64 bit (AMD64)]",
+  "scoring": "average_precision (PR-AUC)",
+  "split_ratio": "80/20 stratified",
+  "split_seed": 42,
+  "strategy": "ros",
+  "test_fraud": 2206,
+  "test_samples": 200000,
+  "threshold_rule": "maximise F2 on validation, take median across folds",
+  "timestamp": "20260314_180846",
+  "train_fraud": 8823,
+  "train_samples": 800000,
+  "train_time_s": 1713.07
+}

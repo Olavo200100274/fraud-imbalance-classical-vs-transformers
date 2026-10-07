@@ -11,10 +11,11 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 import sklearn
+from missing_values import numeric_pipeline
 sklearn.set_config(transform_output="pandas")
 
 
-def get_preprocessor(X_train):
+def get_preprocessor(X_train, missing_policy="preserve"):
     """
     Build a ColumnTransformer that handles both numeric and categorical
     features.  If the data has no categorical columns (e.g. ULB), only
@@ -29,10 +30,7 @@ def get_preprocessor(X_train):
     ).columns.tolist()
 
     # Numeric branch: impute + scale
-    numeric_transformer = Pipeline(steps=[
-        ("imputer", SimpleImputer(strategy="mean")),
-        ("scaler", StandardScaler()),
-    ])
+    numeric_transformer = numeric_pipeline(missing_policy)
 
     transformers = [
         ("num", numeric_transformer, numeric_features),

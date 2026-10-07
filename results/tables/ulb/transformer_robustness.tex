@@ -1,0 +1,21 @@
+\begin{table}[H]
+\centering
+\caption{FT-Transformer and CatBoost performance across imbalance strategies on ULB 2013. The final row is the population standard deviation across the seven complete strategy values, computed from complete saved scores and integer confusion counts before table-display rounding; it is not variability across random seeds.}
+\label{tab:transformer_robustness_ulb}
+\begin{tabular}{l cc cc}
+\toprule
+& \multicolumn{2}{c}{FT-Transformer} & \multicolumn{2}{c}{CatBoost} \\
+Strategy & PR-AUC & $F_2$ & PR-AUC & $F_2$ \\
+\midrule
+None      & 0.801 & 0.761 & 0.820 & 0.775 \\
+RUS       & 0.641 & 0.600 & 0.637 & 0.763 \\
+ROS       & 0.784 & 0.763 & 0.811 & 0.808 \\
+SMOTE     & 0.785 & 0.692 & 0.798 & 0.788 \\
+SM+Tomek  & 0.785 & 0.692 & 0.798 & 0.788 \\
+SMOTEENN  & 0.797 & 0.698 & 0.793 & 0.779 \\
+Weights   & 0.756 & 0.774 & 0.802 & 0.776 \\
+\midrule
+\textit{Pop.\ std.\ dev.} & \textit{0.052} & \textit{0.057} & \textit{0.059} & \textit{0.013} \\
+\bottomrule
+\end{tabular}
+\end{table}

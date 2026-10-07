@@ -1,24 +1,16 @@
-"""
-Cross-Domain Generalization Study (BAF Suite)
-==============================================
-Evaluates how well models trained on BAF Base transfer to Variants I–V
-WITHOUT retraining or re-tuning.
+"""Compatibility entry point for explicitly pinned, duplicate-safe BAF transfer.
 
-Protocol:
-  1. Load the saved BAF Base model (model.joblib) and its threshold (median τ)
-  2. For each Variant I–V:
-     a. Load the variant dataset, apply the same 80/20 split (seed=42)
-     b. Use only the variant's TEST set (20%)
-     c. Transform with the Base preprocessor (no re-fitting)
-     d. Score with the Base model
-     e. Apply the Base threshold τ
-     f. Compute all metrics (PR-AUC, ROC-AUC, F1, F2, CM, bootstrap CI)
-  3. Save results to cross_domain.json alongside the Base model artefacts
+The CLI delegates to ``revision_transfer``. It never selects the latest run or
+writes into the historical ``results`` archive. An explicit manifest selects
+sources; prepared cohorts and a new output directory may also be supplied.
 
 Usage:
-    cd src/
-    python cross_domain.py                    # all models
-    python cross_domain.py --models lgbm      # single model
+    python src/cross_domain.py --manifest <manifest> --prepare-only
+    python src/cross_domain.py --manifest <manifest> --models lgbm \\
+        --partitions-dir <prepared-directory> --output-dir <new-directory>
+
+Historical helper functions below remain importable for compatibility and audit
+of the original workflow. They are not the corrected CLI execution path.
 """
 
 import argparse
@@ -231,40 +223,9 @@ def evaluate_cross_domain(model_name, run_dir):
 # ── CLI ──────────────────────────────────────────────────────────────────
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Cross-domain evaluation: BAF Base → Variants I–V"
-    )
-    parser.add_argument(
-        "--models", type=str, nargs="+",
-        choices=MODEL_ORDER + ["all"],
-        default=["all"],
-        help="Models to evaluate (default: all)",
-    )
-    args = parser.parse_args()
-
-    models = MODEL_ORDER if "all" in args.models else args.models
-
-    print("=" * 60)
-    print("  Cross-Domain Generalization Study (BAF Suite)")
-    print("=" * 60)
-
-    for model_name in models:
-        run_dir = find_latest_run(SOURCE_LABEL, model_name)
-        if run_dir is None:
-            print(f"\n  [SKIP] {model_name} — no baseline run found in "
-                  f"results/{SOURCE_LABEL}/{model_name}/none/")
-            continue
-
-        results = evaluate_cross_domain(model_name, run_dir)
-
-        # Save alongside the Base model
-        out_path = run_dir / "cross_domain.json"
-        save_json(results, out_path)
-        print(f"\n  → Saved: {out_path}")
-
-    print("\n" + "=" * 60)
-    print("  Cross-domain evaluation complete!")
-    print("=" * 60)
+    """Use the revised CLI unchanged, without invoking historical helpers."""
+    from revision_transfer import main as revision_main
+    return revision_main()
 
 
 if __name__ == "__main__":

@@ -1,27 +1,18 @@
 """
 Threshold Sensitivity Study
 ============================
-Applies 4 threshold strategies to the saved baseline models WITHOUT retraining.
 
-Strategies:
-  1. Fixed (τ = 0.5)
-  2. max-F1   — threshold maximising F1 on CV folds, median
-  3. max-F2   — threshold maximising F2 on CV folds, median  (= baseline)
-  4. Prec≥0.5 — lowest threshold ensuring Precision ≥ 0.5, median
-
-For each model the script:
-  1. Reloads the deterministic data split (seed=42)
-  2. Loads the saved model (model.joblib) and config (config.json)
-  3. Rebuilds 5-fold CV to compute per-fold τ for each strategy
-  4. Scores the holdout test set once (from saved model)
-  5. Applies all 4 thresholds → computes F2, F1, Recall, Precision, Alert Rate
-  6. Saves threshold_study.json alongside the existing run artefacts
+The command-line interface derives the four rules from explicitly pinned saved
+validation predictions. It never refits a model, chooses thresholds on TEST,
+or overwrites source-run artefacts. Missing validation evidence is an error.
 
 Usage:
-    cd src/
-    python threshold_study.py --dataset ulb                    # ULB, all models
-    python threshold_study.py --dataset baf_base               # BAF, all models
-    python threshold_study.py --dataset baf_base --models lgbm # BAF, single model
+    python src/threshold_study.py --dataset ulb --manifest <manifest.json> \\
+        --output-dir <revision-derived-directory>
+
+The older classical reconstruction helpers are retained for source-history
+traceability, but are not invoked by the CLI. FT reconstruction is disabled:
+its thresholds must come from the saved best-checkpoint validation scores.
 """
 
 import argparse
@@ -319,111 +310,10 @@ def run_threshold_study_ocsvm(X_train, X_test, y_train, y_test,
 
 
 def run_threshold_study_fttransformer(X_train, y_train, y_test, run_dir):
-    """
-    Threshold study for FT-Transformer.
-
-    Uses saved y_test_scores.npy (no re-scoring).
-    Computes thresholds from a single holdout validation split
-    (consistent with how FT-Transformer selects its baseline threshold).
-    """
-    from sklearn.model_selection import train_test_split
-    import torch
-
-    print(f"\n{'─' * 50}")
-    print(f"  FTTRANSFORMER — Threshold Study")
-    print(f"{'─' * 50}")
-    print(f"  Run dir  : {run_dir}")
-
-    # Load saved test scores
-    y_test_scores = np.load(run_dir / "y_test_scores.npy")
-
-    # Load checkpoint for preprocessing
-    checkpoint = torch.load(run_dir / "model.pt", map_location="cpu",
-                            weights_only=False)
-    hp = checkpoint["hyperparams"]
-    num_cols = checkpoint["num_cols"]
-    cat_cols = checkpoint["cat_cols"]
-    d_num = checkpoint["d_numerical"]
-    cat_cards = checkpoint["cat_cardinalities"]
-
-    # Rebuild validation split (same seed as main_transformer.py)
-    from main_transformer import preprocess_for_transformer, VAL_FRACTION, EVAL_BATCH_SIZE
-    from models.fttransformer import (
-        build_model, TabularDataset, evaluate as ft_evaluate, train_one_epoch,
-    )
-    from torch.utils.data import DataLoader
-
-    X_tr, X_val, y_tr, y_val = train_test_split(
-        X_train, y_train,
-        test_size=VAL_FRACTION, stratify=y_train, random_state=SPLIT_SEED,
-    )
-
-    # Preprocess
-    (X_num_tr, X_cat_tr, X_num_val, X_cat_val,
-     cc, dn, _, _, _, _) = preprocess_for_transformer(X_tr, X_val)
-
-    # Build model and train with best HP to get val scores
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model = build_model(hp, dn, cc).to(device)
-
-    train_loader = DataLoader(
-        TabularDataset(X_num_tr, X_cat_tr, y_tr.values),
-        batch_size=hp["batch_size"], shuffle=True,
-    )
-    val_loader = DataLoader(
-        TabularDataset(X_num_val, X_cat_val, y_val.values),
-        batch_size=EVAL_BATCH_SIZE, shuffle=False,
-    )
-
-    # Train to get val scores
-    best_epoch = checkpoint.get("best_epoch", 50)
-    torch.manual_seed(SPLIT_SEED)
-    torch.cuda.manual_seed_all(SPLIT_SEED)
-
-    optimizer = torch.optim.AdamW(
-        model.parameters(), lr=hp["learning_rate"], weight_decay=hp["weight_decay"],
-    )
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
-        optimizer, T_max=best_epoch, eta_min=1e-7,
-    )
-    criterion = torch.nn.BCEWithLogitsLoss()
-
-    print(f"\n  [1/3] Training {best_epoch} epochs to get val scores ...")
-    for epoch in range(best_epoch):
-        train_one_epoch(model, train_loader, optimizer, criterion, device)
-        scheduler.step()
-
-    y_val_true, y_val_scores = ft_evaluate(model, val_loader, device)
-
-    # Compute thresholds on validation set (single split)
-    print(f"\n  [2/3] Computing thresholds on validation set ...")
-    val_taus = compute_fold_thresholds(y_val_true, y_val_scores)
-
-    # For consistency, store as per_fold with a single "fold"
-    per_fold = {s: [val_taus[s]] for s in STRATEGIES}
-    tau_final = {s: val_taus[s] for s in STRATEGIES}
-
-    print(f"  Thresholds:")
-    for s in STRATEGIES:
-        print(f"    {STRATEGY_LABELS[s]:<15s} : τ = {tau_final[s]:.6f}")
-
-    # Apply to test set
-    print(f"\n  [3/3] Applying thresholds to test set ...")
-    results = {}
-    for s in STRATEGIES:
-        res = apply_threshold(y_test, y_test_scores, tau_final[s])
-        results[s] = res
-        print(f"    {STRATEGY_LABELS[s]:<15s} : "
-              f"F2={res['F2']:.4f}  F1={res['F1']:.4f}  "
-              f"Recall={res['Recall']:.4f}  Alert={res['alert_rate']:.4%}")
-
-    return {
-        "model": "fttransformer",
-        "note": "Thresholds from single holdout validation (not 5-fold CV)",
-        "thresholds_per_fold": per_fold,
-        "thresholds_median": tau_final,
-        "test_results": results,
-    }
+    """Derive thresholds from saved validation evidence; never reconstruct a fit."""
+    from revision_thresholds import study_saved_run
+    config = load_json(run_dir / "config.json")
+    return study_saved_run(run_dir, config["dataset"], "fttransformer")
 
 
 # ── CLI ───────────────────────────────────────────────────────────────────
@@ -444,6 +334,10 @@ def parse_args():
         default=["all"],
         help="Models to analyse (default: all). Valid: logreg rf lgbm catboost ocsvm",
     )
+    parser.add_argument("--manifest", type=Path, required=True,
+                        help="Pinned revision baseline runs with saved validation evidence")
+    parser.add_argument("--output-dir", type=Path, required=True,
+                        help="New derived output directory; source runs are never modified")
     return parser.parse_args()
 
 
@@ -451,89 +345,10 @@ def parse_args():
 
 def main():
     args = parse_args()
-    dataset_key = args.dataset
-    dataset_label = DATASET_LABEL[dataset_key]
-    model_order = MODEL_ORDER_BY_DATASET[dataset_key]
-
-    models = args.models
-    if "all" in models:
-        models = list(model_order)
-    else:
-        # Validate requested models exist for this dataset
-        for m in models:
-            if m not in model_order:
-                print(f"ERROR: model '{m}' not available for dataset '{dataset_key}'. "
-                      f"Available: {model_order}")
-                sys.exit(1)
-
-    print("=" * 60)
-    print(f"  Threshold Sensitivity Study — {dataset_label}")
-    print("=" * 60)
-
-    # ── Load data (same split as main.py) ─────────────────────────
-    print(f"\nLoading {dataset_key} dataset ...")
-    X_train, X_test, y_train, y_test = load_dataset(dataset_key)
-    print(f"  Train : {len(X_train):,} samples  ({y_train.sum()} fraud)")
-    print(f"  Test  : {len(X_test):,} samples   ({y_test.sum()} fraud)")
-
-    preprocessor = get_preprocessor(X_train)
-
-    # ── Run each model ────────────────────────────────────────────
-    all_results = {}
-    t_start = time.time()
-
-    for model_name in models:
-        run_dir = find_latest_run(dataset_label, model_name)
-        if run_dir is None:
-            print(f"\n  [SKIP] {model_name} — no baseline run found")
-            continue
-
-        if model_name == "ocsvm":
-            result = run_threshold_study_ocsvm(
-                X_train, X_test, y_train, y_test, preprocessor, run_dir
-            )
-        elif model_name == "fttransformer":
-            result = run_threshold_study_fttransformer(
-                X_train, y_train, y_test, run_dir
-            )
-        else:
-            result = run_threshold_study_supervised(
-                model_name, X_train, X_test, y_train, y_test,
-                preprocessor, run_dir
-            )
-
-        all_results[model_name] = result
-
-        # Save per-model JSON
-        out_path = run_dir / "threshold_study.json"
-        save_json(result, out_path)
-        print(f"\n  Saved → {out_path}")
-
-    elapsed = time.time() - t_start
-
-    # ── Summary ───────────────────────────────────────────────────
-    print(f"\n\n{'=' * 80}")
-    print(f"  SUMMARY — Threshold Sensitivity Study — {dataset_label}")
-    print(f"{'=' * 80}")
-
-    # F2 summary table
-    header = f"{'Model':<10s}"
-    for s in STRATEGIES:
-        header += f" {STRATEGY_LABELS[s]:>15s}"
-    print(f"\n  F2 scores:")
-    print(f"  {header}")
-    print(f"  {'-' * 75}")
-    for m in models:
-        if m not in all_results:
-            continue
-        row = f"  {m:<10s}"
-        for s in STRATEGIES:
-            f2 = all_results[m]["test_results"][s]["F2"]
-            row += f" {f2:>15.4f}"
-        print(row)
-
-    print(f"\n  Total time: {elapsed:.1f}s")
-    print(f"{'=' * 80}")
+    from revision_thresholds import generate
+    selected_models = MODEL_ORDER_BY_DATASET[args.dataset] if "all" in args.models else args.models
+    print(json.dumps(generate(args.manifest, DATASET_LABEL[args.dataset],
+                              args.output_dir, selected_models), indent=2))
 
 
 if __name__ == "__main__":

@@ -11,7 +11,11 @@ def get_pipeline_and_params(preprocessor):
     """
     pipeline = Pipeline([
         ('preprocessor', preprocessor),
-        ('classifier', LogisticRegression(max_iter=5000, solver='saga', random_state=42)),
+        # scikit-learn 1.8 uses l1_ratio to select L2/L1/Elastic Net; omitting
+        # the deprecated penalty argument is deliberate and version-pinned.
+        ('classifier', LogisticRegression(
+            max_iter=5000, solver='saga', l1_ratio=0.0, random_state=42,
+        )),
     ])
 
     def suggest_params(trial):

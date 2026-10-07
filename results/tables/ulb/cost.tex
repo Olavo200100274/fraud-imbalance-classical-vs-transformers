@@ -1,0 +1,17 @@
+\begin{table}[ht!]
+\centering
+\caption{Computational cost on ULB 2013 (strategy\,=\,None). $\dagger$ marks a historical recorded measurement reused with the frozen model; it is not a new search or final fit. $\ddagger$ marks wall time for a resumed search invocation only, excluding earlier trials' elapsed time. A dash denotes no new hyperparameter search for fixed or untuned models. Validation-only recovery costs are recorded separately and are not included in final-fit time.}
+\label{tab:cost_ulb}
+\begin{tabular}{l r r r}
+\toprule
+Model & Tuning (s) & Train (s) & Inference (s) \\
+\midrule
+LR         & 17,132 & 100.5 & 0.082 \\
+RF         & 42,011 & 153.6 & 0.373 \\
+LGBM       & 367$^{\ddagger}$ & 1.4 & 0.082 \\
+CatBoost   & 2,081 & 9.0 & 0.032 \\
+FT-Trans.  & 17,275 & 596.4 & 1.677 \\
+OCSVM      & --- & 62.0 & 7.585 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,68 @@
+{
+  "bootstrap_requested": 1000,
+  "bootstrap_seed": 42,
+  "bootstrap_unit": "paired original TEST row",
+  "bootstrap_valid": 1000,
+  "difference_second_minus_first": {
+    "F2": 0.0010020336782156636,
+    "alert_rate": -0.018839999999999996,
+    "average_precision": 0.0008285805194514634,
+    "roc_auc": -0.0016344479518426436
+  },
+  "first_artefacts_sha256": {
+    "completed.json": "2d855a821ca8561002625d568d34de5d3dcfa54514379a7bd8f85d77ff19c2a3",
+    "config.json": "b05f9f3ebc0eb7fced5fc5912d00782139ebe2d979291b6e4690ac6e228c2157",
+    "metrics_test.json": "2002936807e8315c37bd819f9ba17a20c2e4ded8deaa424e728d504ab9a80543",
+    "test_row_indices.npy": "153a4f3ec537e7084a6b3efbfd3991bfe548c57fcd60d44ebe682e0059243ae7",
+    "y_test.npy": "d4da3d6a6c62ef54d683eb8837c0d88c54a26ff4fe32d7f8b74ae491201e83fd",
+    "y_test_scores.npy": "309c843423bbc86b5cef990d53068c5e6d078f3e8b92085095bbe00545499a62"
+  },
+  "first_config_sha256": "b05f9f3ebc0eb7fced5fc5912d00782139ebe2d979291b6e4690ac6e228c2157",
+  "first_metrics": {
+    "F2": 0.2567149988115046,
+    "alert_rate": 0.061055,
+    "average_precision": 0.11491511983062087,
+    "roc_auc": 0.8622103180675782
+  },
+  "first_run": "results_revision/20261005/baf_base/fttransformer/smote/run_20261006_081010_379855",
+  "first_threshold": 0.5792941451072693,
+  "fraud_rows": 2206,
+  "paired_95_percentile_intervals": {
+    "F2": [
+      -0.008790881806934818,
+      0.011132085710638126
+    ],
+    "alert_rate": [
+      -0.019690375,
+      -0.017999874999999995
+    ],
+    "average_precision": [
+      -0.00680360078446659,
+      0.007632853449432261
+    ],
+    "roc_auc": [
+      -0.005797952879235835,
+      0.0021561815350261302
+    ]
+  },
+  "policy_selected_using_TEST": false,
+  "rows": 200000,
+  "second_artefacts_sha256": {
+    "completed.json": "2d855a821ca8561002625d568d34de5d3dcfa54514379a7bd8f85d77ff19c2a3",
+    "config.json": "737e3ca6f5db5ea97740d7a1fd0e38539db8285ca27169f64f10dad572a7b741",
+    "metrics_test.json": "8d2a0566a6dc6f5083781ac0c2f23d9dd9ac05a2956d76632c473fce3a10e76c",
+    "test_row_indices.npy": "153a4f3ec537e7084a6b3efbfd3991bfe548c57fcd60d44ebe682e0059243ae7",
+    "y_test.npy": "d4da3d6a6c62ef54d683eb8837c0d88c54a26ff4fe32d7f8b74ae491201e83fd",
+    "y_test_scores.npy": "b1351bceba4d796b214efec53d05e21ed7d24e8c25d6738c38f471a610902614"
+  },
+  "second_config_sha256": "737e3ca6f5db5ea97740d7a1fd0e38539db8285ca27169f64f10dad572a7b741",
+  "second_metrics": {
+    "F2": 0.2577170324897203,
+    "alert_rate": 0.042215,
+    "average_precision": 0.11574370035007234,
+    "roc_auc": 0.8605758701157356
+  },
+  "second_run": "results_revision/20261005/baf_base/fttransformer/smotenc_control/run_20261006_110427_025128",
+  "second_threshold": 0.5544437766075134,
+  "uncertainty_scope": "Conditional on the two fitted models, fixed DEV thresholds and shared TEST split; not training-seed variability."
+}

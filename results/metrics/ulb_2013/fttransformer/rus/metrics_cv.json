@@ -1,0 +1,20 @@
+{
+  "note": "Single holdout validation, strategy=rus",
+  "validation": {
+    "F1": 0.815287,
+    "F2": 0.831169,
+    "FN": 12,
+    "FP": 17,
+    "FP/TP": 0.2656,
+    "PR-AUC": 0.79114,
+    "ROC-AUC": 0.975284,
+    "TN": 45303,
+    "TP": 64,
+    "alert_rate": 0.001784,
+    "brier_score": 0.031119,
+    "k_used": 226,
+    "precision_at_k": 0.292035,
+    "recall_at_k": 0.868421,
+    "threshold": 0.999171
+  }
+}

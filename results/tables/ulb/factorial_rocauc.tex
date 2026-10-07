@@ -1,0 +1,16 @@
+\begin{table}[ht!]
+\centering
+\caption{ROC-AUC by model $\times$ strategy on ULB 2013.}
+\label{tab:factorial_ulb_rocauc}
+\begin{tabular}{l c c c c c c c}
+\toprule
+Model & None & RUS & ROS & SMOTE & SM+T & SMOTEENN & Weights \\
+\midrule
+LR         & 0.957 & 0.963 & \textbf{0.966} & 0.962 & 0.962 & 0.962 & 0.965 \\
+RF         & 0.929 & \textbf{0.976} & 0.934 & 0.964 & 0.964 & 0.954 & 0.934 \\
+LGBM       & 0.980 & 0.973 & 0.977 & 0.980 & 0.980 & \textbf{0.980} & 0.977 \\
+CatBoost   & \textbf{0.980} & 0.974 & 0.976 & 0.967 & 0.967 & 0.968 & 0.977 \\
+FT-Trans.  & \textbf{0.967} & 0.951 & 0.901 & 0.927 & 0.927 & 0.923 & 0.962 \\
+\bottomrule
+\end{tabular}
+\end{table}

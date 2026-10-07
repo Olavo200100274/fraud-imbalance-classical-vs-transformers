@@ -119,7 +119,7 @@ class FTTransformer(nn.Module):
         # ── Categorical embeddings ──────────────────────────────────
         self.cat_embeddings = nn.ModuleList()
         for card in cat_cardinalities:
-            # +1 for unknown category (mapped to -1 → clamped to card)
+            # Reserve the last embedding for unseen category codes.
             self.cat_embeddings.append(nn.Embedding(card + 1, d_token))
 
         # ── [CLS] token ─────────────────────────────────────────────
@@ -185,8 +185,9 @@ class FTTransformer(nn.Module):
         if x_cat is not None and len(self.cat_embeddings) > 0:
             cat_tokens = []
             for i, emb in enumerate(self.cat_embeddings):
-                # Clamp -1 (unknown) to last valid index
-                idx = x_cat[:, i].clamp(min=0, max=emb.num_embeddings - 1)
+                idx = x_cat[:, i]
+                idx = torch.where((idx < 0) | (idx >= emb.num_embeddings - 1),
+                                  emb.num_embeddings - 1, idx)
                 cat_tokens.append(emb(idx))
             cat_tokens = torch.stack(cat_tokens, dim=1)
             tokens = torch.cat([tokens, cat_tokens], dim=1)
@@ -212,10 +213,15 @@ class FTTransformer(nn.Module):
     @torch.no_grad()
     def forward_with_attention(self, x_num, x_cat=None):
         """
-        Like forward(), but also returns per-layer attention weights.
+        Run evaluation inference and return per-layer attention weights.
 
-        Uses forward hooks on self_attn to capture weights without
-        modifying the standard forward pass.
+        For each Pre-LN layer, obtain head-averaged attention weights from
+        its normalised incoming tokens, then propagate those tokens through
+        the original layer forward. The auxiliary attention output is not
+        used to reconstruct residual or feed-forward updates: doing so can
+        introduce floating-point drift relative to the saved predictions.
+        Any encoder final normalisation is applied as in forward(). This
+        diagnostic switches the model to evaluation mode and uses no hooks.
 
         Returns
         -------
@@ -224,6 +230,8 @@ class FTTransformer(nn.Module):
             One (batch, n_tokens, n_tokens) tensor per Transformer layer.
             Each row sums to 1.0 (softmax over keys).
         """
+        if any(not layer.norm_first for layer in self.transformer.layers):
+            raise ValueError("Attention extraction requires the model's Pre-LN encoder layers.")
         self.eval()
         batch_size = x_num.size(0)
 
@@ -233,7 +241,9 @@ class FTTransformer(nn.Module):
         if x_cat is not None and len(self.cat_embeddings) > 0:
             cat_tokens = []
             for i, emb in enumerate(self.cat_embeddings):
-                idx = x_cat[:, i].clamp(min=0, max=emb.num_embeddings - 1)
+                idx = x_cat[:, i]
+                idx = torch.where((idx < 0) | (idx >= emb.num_embeddings - 1),
+                                  emb.num_embeddings - 1, idx)
                 cat_tokens.append(emb(idx))
             cat_tokens = torch.stack(cat_tokens, dim=1)
             tokens = torch.cat([tokens, cat_tokens], dim=1)
@@ -242,25 +252,21 @@ class FTTransformer(nn.Module):
         tokens = torch.cat([cls, tokens], dim=1)
         tokens = tokens + self.pos_embedding
 
-        # ── Manual loop through encoder layers (Pre-LN) ──
+        # ── Extract weights without replacing the original layer forward ──
         attn_weights = []
         for layer in self.transformer.layers:
             # Pre-LN: norm before attention
             normed = layer.norm1(tokens)
-            attn_out, weights = layer.self_attn(
+            _, weights = layer.self_attn(
                 normed, normed, normed,
                 need_weights=True,
                 average_attn_weights=True,  # average over heads → (batch, seq, seq)
             )
-            tokens = tokens + layer.dropout1(attn_out)
-
-            # FFN with Pre-LN
-            normed2 = layer.norm2(tokens)
-            ff_out = layer.linear2(layer.dropout(layer.activation(layer.linear1(normed2))))
-            tokens = tokens + layer.dropout2(ff_out)
-
+            tokens = layer(tokens)
             attn_weights.append(weights)  # (batch, n_tokens, n_tokens)
 
+        if self.transformer.norm is not None:
+            tokens = self.transformer.norm(tokens)
         tokens = self.residual_dropout(tokens)
 
         # [CLS] output → logit

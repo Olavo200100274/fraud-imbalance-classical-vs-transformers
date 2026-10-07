@@ -1,0 +1,17 @@
+\begin{table}[ht!]
+\centering
+\caption{Cross-domain ROC-AUC: trained on BAF Base, evaluated on each Variant (no retraining).}
+\label{tab:crossdomain_rocauc}
+\begin{tabular}{l c c c c c c}
+\toprule
+Model & Base & Var I & Var II & Var III & Var IV & Var V \\
+\midrule
+LR         & 0.8745 & 0.8488 & 0.8786 & 0.8517 & \textbf{0.8819} & 0.8450 \\
+RF         & 0.8778 & 0.8533 & 0.8851 & 0.8586 & \textbf{0.8880} & 0.8461 \\
+LGBM       & 0.8985 & 0.8820 & 0.9004 & 0.8809 & \textbf{0.9062} & 0.8710 \\
+CatBoost   & 0.8980 & 0.8812 & 0.8994 & 0.8797 & \textbf{0.9042} & 0.8712 \\
+FT-Trans.  & 0.8965 & 0.8785 & 0.8964 & 0.8760 & \textbf{0.9009} & 0.8681 \\
+OCSVM      & 0.6279 & 0.5959 & \textbf{0.6616} & 0.6144 & 0.6456 & 0.5907 \\
+\bottomrule
+\end{tabular}
+\end{table}

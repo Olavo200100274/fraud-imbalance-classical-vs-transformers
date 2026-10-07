@@ -1,0 +1,20 @@
+{
+  "note": "Single holdout validation, strategy=smote_tomek",
+  "validation": {
+    "F1": 0.876712,
+    "F2": 0.855615,
+    "FN": 12,
+    "FP": 6,
+    "FP/TP": 0.0938,
+    "PR-AUC": 0.870492,
+    "ROC-AUC": 0.9584,
+    "TN": 45314,
+    "TP": 64,
+    "alert_rate": 0.001542,
+    "brier_score": 0.000989,
+    "k_used": 226,
+    "precision_at_k": 0.300885,
+    "recall_at_k": 0.894737,
+    "threshold": 0.999974
+  }
+}

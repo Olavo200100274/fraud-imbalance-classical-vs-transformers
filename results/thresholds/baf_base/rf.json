@@ -1,0 +1,152 @@
+{
+  "aggregation": "median of five per-fold thresholds",
+  "dataset": "baf_base",
+  "fixed_rule_scale": "fraud probability",
+  "model": "rf",
+  "precision_constraint_scope": "each validation fold; neither a pooled validation nor TEST guarantee after median aggregation",
+  "selection_population": "DEV validation only; TEST scores used after threshold selection",
+  "source_run": "results_revision/20261005/baf_base/rf/none/run_20261006_224023_731463",
+  "source_sha256": {
+    "config.json": "afcf07713b84ef70b86232879fe6739b1a16c73fec4051f9303613eaaa413102",
+    "metrics_test.json": "7f8188c562304cb8dcba191020da80aaa1491584b04c265eb26e0c9839903da8",
+    "test_row_indices.npy": "153a4f3ec537e7084a6b3efbfd3991bfe548c57fcd60d44ebe682e0059243ae7",
+    "validation_fold_ids.npy": "679e3b310b8a16a611e2502e3e70bcb5c0136829bbe518b5997b2d1a9148cf60",
+    "validation_row_indices.npy": "72391b9abe977d059bb4a9144cfdfc87ba7f3425547552d9e0152191978ae80e",
+    "y_test.npy": "d4da3d6a6c62ef54d683eb8837c0d88c54a26ff4fe32d7f8b74ae491201e83fd",
+    "y_test_scores.npy": "321a775a9c025ad858431fe4c3a861069c46be2dc8ffdf787ddabae1b7f4ecca",
+    "y_val.npy": "d970be9a1c12b3133a0af7ef27f16611846f19038a027c53c37d0d4dcb059b5e",
+    "y_val_scores.npy": "bce465cfda27365105edb0b0a55bbce003590252aea438e0f6b815f7b709428c"
+  },
+  "test_fraud_samples": 2206,
+  "test_prevalence": 0.01103,
+  "test_results": {
+    "fixed_05": {
+      "F1": 0.000906,
+      "F2": 0.000567,
+      "FN": 2205,
+      "FP": 0,
+      "PR-AUC": 0.158833,
+      "Precision": 1.0,
+      "ROC-AUC": 0.877802,
+      "Recall": 0.000453,
+      "TN": 197794,
+      "TP": 1,
+      "alert_rate": 5e-06,
+      "selection_state": "finite threshold",
+      "threshold": 0.5,
+      "threshold_exact": 0.5
+    },
+    "max_f1": {
+      "F1": 0.236981,
+      "F2": 0.263467,
+      "FN": 1578,
+      "FP": 2466,
+      "PR-AUC": 0.158833,
+      "Precision": 0.202973,
+      "ROC-AUC": 0.877802,
+      "Recall": 0.284678,
+      "TN": 195328,
+      "TP": 628,
+      "alert_rate": 0.01547,
+      "selection_state": "finite threshold",
+      "threshold": 0.094677,
+      "threshold_exact": 0.09467701782683605
+    },
+    "max_f2": {
+      "F1": 0.20479,
+      "F2": 0.294137,
+      "FN": 1291,
+      "FP": 5815,
+      "PR-AUC": 0.158833,
+      "Precision": 0.135958,
+      "ROC-AUC": 0.877802,
+      "Recall": 0.414778,
+      "TN": 191979,
+      "TP": 915,
+      "alert_rate": 0.03365,
+      "selection_state": "finite threshold",
+      "threshold": 0.063114,
+      "threshold_exact": 0.06311373249196667
+    },
+    "prec_ge_05": {
+      "F1": 0.067682,
+      "F2": 0.044534,
+      "FN": 2126,
+      "FP": 78,
+      "PR-AUC": 0.158833,
+      "Precision": 0.506329,
+      "ROC-AUC": 0.877802,
+      "Recall": 0.036265,
+      "TN": 197716,
+      "TP": 80,
+      "alert_rate": 0.00079,
+      "selection_state": "finite threshold",
+      "threshold": 0.256373,
+      "threshold_exact": 0.2563730767306679
+    }
+  },
+  "test_samples": 200000,
+  "thresholds_median": {
+    "fixed_05": 0.5,
+    "max_f1": 0.09467701782683605,
+    "max_f2": 0.06311373249196667,
+    "prec_ge_05": 0.2563730767306679
+  },
+  "thresholds_per_fold": {
+    "fixed_05": [
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5
+    ],
+    "max_f1": [
+      0.09467701782683605,
+      0.09986436727193775,
+      0.10115512491593058,
+      0.09373123464087632,
+      0.08467314853991895
+    ],
+    "max_f2": [
+      0.06052068853973359,
+      0.060762715004736324,
+      0.06311373249196667,
+      0.06822142376241155,
+      0.06850447546427725
+    ],
+    "prec_ge_05": [
+      0.27179693539388483,
+      0.2334377477392683,
+      0.24202541210720438,
+      0.28297711129445796,
+      0.2563730767306679
+    ]
+  },
+  "validation_folds": [
+    {
+      "fold": 1,
+      "fraud_samples": 1764,
+      "samples": 160000
+    },
+    {
+      "fold": 2,
+      "fraud_samples": 1764,
+      "samples": 160000
+    },
+    {
+      "fold": 3,
+      "fraud_samples": 1765,
+      "samples": 160000
+    },
+    {
+      "fold": 4,
+      "fraud_samples": 1765,
+      "samples": 160000
+    },
+    {
+      "fold": 5,
+      "fraud_samples": 1765,
+      "samples": 160000
+    }
+  ]
+}

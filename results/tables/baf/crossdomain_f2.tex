@@ -1,0 +1,17 @@
+\begin{table}[ht!]
+\centering
+\caption{Cross-domain $F_2$: trained on BAF Base, evaluated on each Variant (no retraining).}
+\label{tab:crossdomain_f2}
+\begin{tabular}{l c c c c c c}
+\toprule
+Model & Base & Var I & Var II & Var III & Var IV & Var V \\
+\midrule
+LR         & \textbf{0.2868} & 0.2391 & 0.2656 & 0.2370 & 0.2680 & 0.2284 \\
+RF         & \textbf{0.2941} & 0.2459 & 0.2840 & 0.2522 & 0.2796 & 0.2438 \\
+LGBM       & \textbf{0.3159} & 0.2693 & 0.3035 & 0.2760 & 0.3008 & 0.2620 \\
+CatBoost   & \textbf{0.3143} & 0.2701 & 0.2994 & 0.2697 & 0.2991 & 0.2588 \\
+FT-Trans.  & \textbf{0.3041} & 0.2661 & 0.2655 & 0.2489 & 0.2722 & 0.2391 \\
+OCSVM      & 0.0805 & 0.0662 & \textbf{0.0925} & 0.0749 & 0.0870 & 0.0690 \\
+\bottomrule
+\end{tabular}
+\end{table}

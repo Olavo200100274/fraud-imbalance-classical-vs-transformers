@@ -1,0 +1,265 @@
+{
+  "artefacts": {
+    "base_dev_predictor_hashes.npy": {
+      "array_sha256": "50c4e5556af9f5dd98b0b8f23cadf4fe1fcbc433d17ca15ec3bfc20b32d1dcb9",
+      "dtype": "uint64",
+      "file_sha256": "546c9410b95a7e931d632a07cbfd172e8935b2c68068544c50adc4f6e7bb3fde",
+      "shape": [
+        800000
+      ]
+    },
+    "base_dev_row_indices.npy": {
+      "array_sha256": "83a8ca2fe23c4066d3c442858d02df87898cf30f847f2a88fca6d89a27e57e4f",
+      "dtype": "int64",
+      "file_sha256": "72391b9abe977d059bb4a9144cfdfc87ba7f3425547552d9e0152191978ae80e",
+      "shape": [
+        800000
+      ]
+    },
+    "base_test_row_indices.npy": {
+      "array_sha256": "7bb474a92e980fed8af2a51014d698ad892f4766df61f5d602810822a68376a5",
+      "dtype": "int64",
+      "file_sha256": "153a4f3ec537e7084a6b3efbfd3991bfe548c57fcd60d44ebe682e0059243ae7",
+      "shape": [
+        200000
+      ]
+    },
+    "base_test_y.npy": {
+      "array_sha256": "3148e6f40707b32b25908e824b20342a6d16bdf33e89a0477f42b8e92bf397ad",
+      "dtype": "int64",
+      "file_sha256": "d4da3d6a6c62ef54d683eb8837c0d88c54a26ff4fe32d7f8b74ae491201e83fd",
+      "shape": [
+        200000
+      ]
+    }
+  },
+  "base": {
+    "data_provenance": {
+      "deduplication": {
+        "policy": "no_row_removal_historical_baf_split",
+        "raw_positive_rows": 11029,
+        "raw_rows": 1000000,
+        "removed_positive_rows": 0,
+        "removed_rows": 0,
+        "retained_positive_rows": 11029,
+        "retained_rows": 1000000
+      },
+      "dev_indices_sha256": "83a8ca2fe23c4066d3c442858d02df87898cf30f847f2a88fca6d89a27e57e4f",
+      "eligible_positive_rows": 11029,
+      "eligible_rows": 1000000,
+      "excluded_columns": [
+        "month"
+      ],
+      "feature_columns": [
+        "income",
+        "name_email_similarity",
+        "prev_address_months_count",
+        "current_address_months_count",
+        "customer_age",
+        "days_since_request",
+        "intended_balcon_amount",
+        "payment_type",
+        "zip_count_4w",
+        "velocity_6h",
+        "velocity_24h",
+        "velocity_4w",
+        "bank_branch_count_8w",
+        "date_of_birth_distinct_emails_4w",
+        "employment_status",
+        "credit_risk_score",
+        "email_is_free",
+        "housing_status",
+        "phone_home_valid",
+        "phone_mobile_valid",
+        "bank_months_count",
+        "has_other_cards",
+        "proposed_credit_limit",
+        "foreign_request",
+        "source",
+        "session_length_in_minutes",
+        "device_os",
+        "keep_alive_session",
+        "device_distinct_emails_8w",
+        "device_fraud_count"
+      ],
+      "missing_value_policy": "numeric_sentinels_preserved",
+      "protocol_version": "thesis_revision_20261005_v1",
+      "raw_file": "datasets/Base.csv",
+      "raw_file_sha256": "7bf10a37ce07e72e14c1b09e5efee3d27261baff4facc7da767b0474dcf9b809",
+      "sample_fraction": null,
+      "split_ratio": "80/20 stratified",
+      "split_seed": 42,
+      "test_indices_sha256": "7bb474a92e980fed8af2a51014d698ad892f4766df61f5d602810822a68376a5"
+    },
+    "dev_population": {
+      "fraud_prevalence": 0.01102875,
+      "negative_rows": 791177,
+      "positive_rows": 8823,
+      "rows": 800000
+    },
+    "dev_predictor_table_sha256": "bd4c073e7d90728c5cad590e9f30a85b9974cad6411cd3b7a04d87268d692925",
+    "test_population": {
+      "fraud_prevalence": 0.01103,
+      "negative_rows": 197794,
+      "positive_rows": 2206,
+      "rows": 200000
+    }
+  },
+  "created_at_utc": "2026-10-05T21:54:53.335261+00:00",
+  "feature_columns": [
+    "income",
+    "name_email_similarity",
+    "prev_address_months_count",
+    "current_address_months_count",
+    "customer_age",
+    "days_since_request",
+    "intended_balcon_amount",
+    "payment_type",
+    "zip_count_4w",
+    "velocity_6h",
+    "velocity_24h",
+    "velocity_4w",
+    "bank_branch_count_8w",
+    "date_of_birth_distinct_emails_4w",
+    "employment_status",
+    "credit_risk_score",
+    "email_is_free",
+    "housing_status",
+    "phone_home_valid",
+    "phone_mobile_valid",
+    "bank_months_count",
+    "has_other_cards",
+    "proposed_credit_limit",
+    "foreign_request",
+    "source",
+    "session_length_in_minutes",
+    "device_os",
+    "keep_alive_session",
+    "device_distinct_emails_8w",
+    "device_fraud_count"
+  ],
+  "matching_policy": "any_exact_common_predictor_match_with_Base_DEV",
+  "matching_verification": "All hash candidate pairs checked element by element across all 30 predictors.",
+  "missing_value_policy": "numeric_sentinels_preserved",
+  "protocol_version": "thesis_revision_20261005_v1",
+  "scope": "Distribution transfer under a shared schema; not prospective temporal drift or the x1/x2 separability intervention.",
+  "source_code_sha256": {
+    "src/data.py": "461b2025bcab52b2fbcb686df91ec9cfc927b25306ea8f5128956c856497a581",
+    "src/revision_transfer.py": "83423655f4564b35182009ef3601c4c2347175a8cf5af84a32ab70c64061204b"
+  },
+  "source_manifest": "results_revision/20261005/revision_manifest.json",
+  "source_manifest_sha256": "128e1a9453dd28ba19fea2940d8abe018116242676d4602d721aba6bdc39a136",
+  "status": "complete",
+  "variants": {
+    "baf_var1": {
+      "directory": "baf_var1",
+      "excluded_population": {
+        "fraud_prevalence": 0.011657915813829314,
+        "negative_rows": 22212,
+        "positive_rows": 262,
+        "rows": 22474
+      },
+      "kept_population": {
+        "fraud_prevalence": 0.010950508657886732,
+        "negative_rows": 175582,
+        "positive_rows": 1944,
+        "rows": 177526
+      },
+      "original_population": {
+        "fraud_prevalence": 0.01103,
+        "negative_rows": 197794,
+        "positive_rows": 2206,
+        "rows": 200000
+      },
+      "partition_audit_sha256": "ae448f3968927273c49855b402cc49cbb734530e62c2eba029c888336f78df0f"
+    },
+    "baf_var2": {
+      "directory": "baf_var2",
+      "excluded_population": {
+        "fraud_prevalence": 0.011126440874093195,
+        "negative_rows": 22219,
+        "positive_rows": 250,
+        "rows": 22469
+      },
+      "kept_population": {
+        "fraud_prevalence": 0.011017794075400916,
+        "negative_rows": 175575,
+        "positive_rows": 1956,
+        "rows": 177531
+      },
+      "original_population": {
+        "fraud_prevalence": 0.01103,
+        "negative_rows": 197794,
+        "positive_rows": 2206,
+        "rows": 200000
+      },
+      "partition_audit_sha256": "9282a1ff06b148e2308468ec1064f18278d0dc0f2a5fc961d20ca0f9e4f3cd60"
+    },
+    "baf_var3": {
+      "directory": "baf_var3",
+      "excluded_population": {
+        "fraud_prevalence": 0.011512075932713091,
+        "negative_rows": 21037,
+        "positive_rows": 245,
+        "rows": 21282
+      },
+      "kept_population": {
+        "fraud_prevalence": 0.010972593695095066,
+        "negative_rows": 176757,
+        "positive_rows": 1961,
+        "rows": 178718
+      },
+      "original_population": {
+        "fraud_prevalence": 0.01103,
+        "negative_rows": 197794,
+        "positive_rows": 2206,
+        "rows": 200000
+      },
+      "partition_audit_sha256": "86112f066d584aa6c548684b0a4b7d8de19f03d1b881137c6d86d3dbc3466ee4"
+    },
+    "baf_var4": {
+      "directory": "baf_var4",
+      "excluded_population": {
+        "fraud_prevalence": 0.01152224824355972,
+        "negative_rows": 21104,
+        "positive_rows": 246,
+        "rows": 21350
+      },
+      "kept_population": {
+        "fraud_prevalence": 0.010971172684019032,
+        "negative_rows": 176690,
+        "positive_rows": 1960,
+        "rows": 178650
+      },
+      "original_population": {
+        "fraud_prevalence": 0.01103,
+        "negative_rows": 197794,
+        "positive_rows": 2206,
+        "rows": 200000
+      },
+      "partition_audit_sha256": "ad92af6a7c097ca500bcf6556f49355ef6671dfb173ea1fcde94e74ec8de327d"
+    },
+    "baf_var5": {
+      "directory": "baf_var5",
+      "excluded_population": {
+        "fraud_prevalence": 0.01076894010957869,
+        "negative_rows": 20944,
+        "positive_rows": 228,
+        "rows": 21172
+      },
+      "kept_population": {
+        "fraud_prevalence": 0.01106090768783412,
+        "negative_rows": 176850,
+        "positive_rows": 1978,
+        "rows": 178828
+      },
+      "original_population": {
+        "fraud_prevalence": 0.01103,
+        "negative_rows": 197794,
+        "positive_rows": 2206,
+        "rows": 200000
+      },
+      "partition_audit_sha256": "1e04b484d4ab9df689190ec1bc343bfb632e9485171c8d5fbaaa4e7d49b25341"
+    }
+  }
+}

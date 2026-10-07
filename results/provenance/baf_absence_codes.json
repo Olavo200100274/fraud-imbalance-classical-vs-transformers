@@ -1,0 +1,112 @@
+{
+  "absence_counts": {
+    "dev": {
+      "bank_months_count": {
+        "absence_codes": 202604,
+        "actual_nan": 0,
+        "fraction": 0.253255
+      },
+      "current_address_months_count": {
+        "absence_codes": 3391,
+        "actual_nan": 0,
+        "fraction": 0.00423875
+      },
+      "device_distinct_emails_8w": {
+        "absence_codes": 290,
+        "actual_nan": 0,
+        "fraction": 0.0003625
+      },
+      "intended_balcon_amount": {
+        "absence_codes": 593868,
+        "actual_nan": 0,
+        "fraction": 0.742335
+      },
+      "prev_address_months_count": {
+        "absence_codes": 570525,
+        "actual_nan": 0,
+        "fraction": 0.71315625
+      },
+      "session_length_in_minutes": {
+        "absence_codes": 1623,
+        "actual_nan": 0,
+        "fraction": 0.00202875
+      }
+    },
+    "raw": {
+      "bank_months_count": {
+        "absence_codes": 253635,
+        "actual_nan": 0,
+        "fraction": 0.253635
+      },
+      "current_address_months_count": {
+        "absence_codes": 4254,
+        "actual_nan": 0,
+        "fraction": 0.004254
+      },
+      "device_distinct_emails_8w": {
+        "absence_codes": 359,
+        "actual_nan": 0,
+        "fraction": 0.000359
+      },
+      "intended_balcon_amount": {
+        "absence_codes": 742523,
+        "actual_nan": 0,
+        "fraction": 0.742523
+      },
+      "prev_address_months_count": {
+        "absence_codes": 712920,
+        "actual_nan": 0,
+        "fraction": 0.71292
+      },
+      "session_length_in_minutes": {
+        "absence_codes": 2015,
+        "actual_nan": 0,
+        "fraction": 0.002015
+      }
+    },
+    "test": {
+      "bank_months_count": {
+        "absence_codes": 51031,
+        "actual_nan": 0,
+        "fraction": 0.255155
+      },
+      "current_address_months_count": {
+        "absence_codes": 863,
+        "actual_nan": 0,
+        "fraction": 0.004315
+      },
+      "device_distinct_emails_8w": {
+        "absence_codes": 69,
+        "actual_nan": 0,
+        "fraction": 0.000345
+      },
+      "intended_balcon_amount": {
+        "absence_codes": 148655,
+        "actual_nan": 0,
+        "fraction": 0.743275
+      },
+      "prev_address_months_count": {
+        "absence_codes": 142395,
+        "actual_nan": 0,
+        "fraction": 0.711975
+      },
+      "session_length_in_minutes": {
+        "absence_codes": 392,
+        "actual_nan": 0,
+        "fraction": 0.00196
+      }
+    }
+  },
+  "definition_source": "https://github.com/feedzai/bank-account-fraud/blob/main/documents/datasheet.pdf",
+  "partition_manifest_sha256": "328aa762751046b18606f008e17ed130d9a824ae92dbc5e7a5205087d30764f9",
+  "population_rows": {
+    "dev": 800000,
+    "raw": 1000000,
+    "test": 200000
+  },
+  "primary_policy": "Retain numerical absence codes; actual NaN imputation does not replace these codes.",
+  "raw_file": "datasets/Base.csv",
+  "raw_file_sha256": "7bf10a37ce07e72e14c1b09e5efee3d27261baff4facc7da767b0474dcf9b809",
+  "sensitivity_policy": "Convert only documented codes to NaN, then fit means and indicators within the training partition.",
+  "status": "complete"
+}

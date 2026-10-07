@@ -1,0 +1,16 @@
+\begin{table}[ht!]
+\centering
+\caption{$F_1$ by model $\times$ strategy on ULB 2013.}
+\label{tab:factorial_ulb_f1}
+\begin{tabular}{l c c c c c c c}
+\toprule
+Model & None & RUS & ROS & SMOTE & SM+T & SMOTEENN & Weights \\
+\midrule
+LR         & 0.791 & 0.661 & 0.793 & 0.777 & 0.777 & 0.793 & \textbf{0.798} \\
+RF         & 0.820 & 0.800 & 0.847 & 0.813 & 0.813 & 0.798 & \textbf{0.854} \\
+LGBM       & \textbf{0.852} & 0.776 & 0.816 & 0.814 & 0.814 & 0.804 & 0.798 \\
+CatBoost   & 0.821 & 0.770 & \textbf{0.838} & 0.820 & 0.820 & 0.814 & 0.804 \\
+FT-Trans.  & 0.800 & 0.452 & \textbf{0.826} & 0.761 & 0.761 & 0.780 & 0.800 \\
+\bottomrule
+\end{tabular}
+\end{table}

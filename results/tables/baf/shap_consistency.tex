@@ -1,0 +1,14 @@
+\begin{table}[ht!]
+\centering
+\caption{Jaccard similarity of top-10 SHAP features across model pairs (BAF Base).}
+\label{tab:shap_consistency}
+\begin{tabular}{l c c c}
+\toprule
+          & LR & LGBM & CatBoost \\
+\midrule
+LR         & --- & 0.67 & 0.67 \\
+LGBM       & 0.67 & --- & 1.00 \\
+CatBoost   & 0.67 & 1.00 & --- \\
+\bottomrule
+\end{tabular}
+\end{table}

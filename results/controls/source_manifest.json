@@ -1,0 +1,176 @@
+{
+  "baseline_runs": {
+    "baf_base/catboost": {
+      "completed_at_utc": "2026-10-06T23:56:58.905881+00:00",
+      "config_sha256": "2d5f2e9556469e65e81d1276ccbc2b4ff3c0b48b84b756a4e0d18fdd901b8617",
+      "dataset_hash_sha256": "7bf10a37ce07e72e14c1b09e5efee3d27261baff4facc7da767b0474dcf9b809",
+      "missing_policy": "nan_indicators",
+      "protocol_version": "thesis_revision_20261005_v1",
+      "run_dir": "results_revision/20261005/sensitivity/baf_base/catboost/none/run_20261007_005657_893680",
+      "sample_fraction": null
+    },
+    "baf_base/fttransformer": {
+      "completed_at_utc": "2026-10-06T09:50:05.683966+00:00",
+      "config_sha256": "80a452e459a2106574113ae0edce80c3fca42935cc0f48918c80f2058af506a7",
+      "dataset_hash_sha256": "7bf10a37ce07e72e14c1b09e5efee3d27261baff4facc7da767b0474dcf9b809",
+      "missing_policy": "nan_indicators",
+      "protocol_version": "thesis_revision_20261005_v1",
+      "run_dir": "results_revision/20261005/sensitivity/baf_base/fttransformer/none/run_20261006_105004_579756",
+      "sample_fraction": null
+    },
+    "baf_base/lgbm": {
+      "completed_at_utc": "2026-10-06T23:52:49.424889+00:00",
+      "config_sha256": "d0c269c356c12ddd1a21eec81cf8a6d06e0e9358df2cfb005dff8b7421382709",
+      "dataset_hash_sha256": "7bf10a37ce07e72e14c1b09e5efee3d27261baff4facc7da767b0474dcf9b809",
+      "missing_policy": "nan_indicators",
+      "protocol_version": "thesis_revision_20261005_v1",
+      "run_dir": "results_revision/20261005/sensitivity/baf_base/lgbm/none/run_20261007_005248_277073",
+      "sample_fraction": null
+    },
+    "baf_base/logreg": {
+      "completed_at_utc": "2026-10-07T00:40:46.286319+00:00",
+      "config_sha256": "215ba0d45a01491863cfc075d754e5cacc8c0cc4b99aafe465e0358aaee5812f",
+      "dataset_hash_sha256": "7bf10a37ce07e72e14c1b09e5efee3d27261baff4facc7da767b0474dcf9b809",
+      "missing_policy": "nan_indicators",
+      "protocol_version": "thesis_revision_20261005_v1",
+      "run_dir": "results_revision/20261005/sensitivity/baf_base/logreg/none/run_20261007_014045_236128",
+      "sample_fraction": null
+    },
+    "baf_base/ocsvm": {
+      "completed_at_utc": "2026-10-07T03:38:49.281440+00:00",
+      "config_sha256": "080e720147bba126b4bffd82b248ddb9dc83938fce44c5d61e30494688f5e91b",
+      "dataset_hash_sha256": "7bf10a37ce07e72e14c1b09e5efee3d27261baff4facc7da767b0474dcf9b809",
+      "missing_policy": "nan_indicators",
+      "protocol_version": "thesis_revision_20261005_v1",
+      "run_dir": "results_revision/20261005/sensitivity/baf_base/ocsvm/none/run_20261007_043848_125175",
+      "sample_fraction": null
+    },
+    "baf_base/rf": {
+      "completed_at_utc": "2026-10-07T01:38:18.859591+00:00",
+      "config_sha256": "6806250990d08d6e6dcbfbf3bf87a401427184b89e5abb80f04fef7280c1c8b4",
+      "dataset_hash_sha256": "7bf10a37ce07e72e14c1b09e5efee3d27261baff4facc7da767b0474dcf9b809",
+      "missing_policy": "nan_indicators",
+      "protocol_version": "thesis_revision_20261005_v1",
+      "run_dir": "results_revision/20261005/sensitivity/baf_base/rf/none/run_20261007_023817_584008",
+      "sample_fraction": null
+    }
+  },
+  "datasets": {
+    "baf_base": {
+      "deduplication": {
+        "policy": "no_row_removal_historical_baf_split",
+        "raw_positive_rows": 11029,
+        "raw_rows": 1000000,
+        "removed_positive_rows": 0,
+        "removed_rows": 0,
+        "retained_positive_rows": 11029,
+        "retained_rows": 1000000
+      },
+      "dev_indices_sha256": "83a8ca2fe23c4066d3c442858d02df87898cf30f847f2a88fca6d89a27e57e4f",
+      "eligible_positive_rows": 11029,
+      "eligible_rows": 1000000,
+      "excluded_columns": [
+        "month"
+      ],
+      "feature_columns": [
+        "income",
+        "name_email_similarity",
+        "prev_address_months_count",
+        "current_address_months_count",
+        "customer_age",
+        "days_since_request",
+        "intended_balcon_amount",
+        "payment_type",
+        "zip_count_4w",
+        "velocity_6h",
+        "velocity_24h",
+        "velocity_4w",
+        "bank_branch_count_8w",
+        "date_of_birth_distinct_emails_4w",
+        "employment_status",
+        "credit_risk_score",
+        "email_is_free",
+        "housing_status",
+        "phone_home_valid",
+        "phone_mobile_valid",
+        "bank_months_count",
+        "has_other_cards",
+        "proposed_credit_limit",
+        "foreign_request",
+        "source",
+        "session_length_in_minutes",
+        "device_os",
+        "keep_alive_session",
+        "device_distinct_emails_8w",
+        "device_fraud_count"
+      ],
+      "missing_value_policy": "numeric_sentinels_preserved",
+      "protocol_version": "thesis_revision_20261005_v1",
+      "raw_file": "datasets/Base.csv",
+      "raw_file_sha256": "7bf10a37ce07e72e14c1b09e5efee3d27261baff4facc7da767b0474dcf9b809",
+      "sample_fraction": null,
+      "split_ratio": "80/20 stratified",
+      "split_seed": 42,
+      "test_indices_sha256": "7bb474a92e980fed8af2a51014d698ad892f4766df61f5d602810822a68376a5"
+    }
+  },
+  "historical_baseline_runs": {},
+  "protocol_version": "thesis_revision_20261005_v1",
+  "runs": {
+    "baf_base/catboost/none": {
+      "completed_at_utc": "2026-10-06T23:56:58.905881+00:00",
+      "config_sha256": "2d5f2e9556469e65e81d1276ccbc2b4ff3c0b48b84b756a4e0d18fdd901b8617",
+      "dataset_hash_sha256": "7bf10a37ce07e72e14c1b09e5efee3d27261baff4facc7da767b0474dcf9b809",
+      "missing_policy": "nan_indicators",
+      "protocol_version": "thesis_revision_20261005_v1",
+      "run_dir": "results_revision/20261005/sensitivity/baf_base/catboost/none/run_20261007_005657_893680",
+      "sample_fraction": null
+    },
+    "baf_base/fttransformer/none": {
+      "completed_at_utc": "2026-10-06T09:50:05.683966+00:00",
+      "config_sha256": "80a452e459a2106574113ae0edce80c3fca42935cc0f48918c80f2058af506a7",
+      "dataset_hash_sha256": "7bf10a37ce07e72e14c1b09e5efee3d27261baff4facc7da767b0474dcf9b809",
+      "missing_policy": "nan_indicators",
+      "protocol_version": "thesis_revision_20261005_v1",
+      "run_dir": "results_revision/20261005/sensitivity/baf_base/fttransformer/none/run_20261006_105004_579756",
+      "sample_fraction": null
+    },
+    "baf_base/lgbm/none": {
+      "completed_at_utc": "2026-10-06T23:52:49.424889+00:00",
+      "config_sha256": "d0c269c356c12ddd1a21eec81cf8a6d06e0e9358df2cfb005dff8b7421382709",
+      "dataset_hash_sha256": "7bf10a37ce07e72e14c1b09e5efee3d27261baff4facc7da767b0474dcf9b809",
+      "missing_policy": "nan_indicators",
+      "protocol_version": "thesis_revision_20261005_v1",
+      "run_dir": "results_revision/20261005/sensitivity/baf_base/lgbm/none/run_20261007_005248_277073",
+      "sample_fraction": null
+    },
+    "baf_base/logreg/none": {
+      "completed_at_utc": "2026-10-07T00:40:46.286319+00:00",
+      "config_sha256": "215ba0d45a01491863cfc075d754e5cacc8c0cc4b99aafe465e0358aaee5812f",
+      "dataset_hash_sha256": "7bf10a37ce07e72e14c1b09e5efee3d27261baff4facc7da767b0474dcf9b809",
+      "missing_policy": "nan_indicators",
+      "protocol_version": "thesis_revision_20261005_v1",
+      "run_dir": "results_revision/20261005/sensitivity/baf_base/logreg/none/run_20261007_014045_236128",
+      "sample_fraction": null
+    },
+    "baf_base/ocsvm/none": {
+      "completed_at_utc": "2026-10-07T03:38:49.281440+00:00",
+      "config_sha256": "080e720147bba126b4bffd82b248ddb9dc83938fce44c5d61e30494688f5e91b",
+      "dataset_hash_sha256": "7bf10a37ce07e72e14c1b09e5efee3d27261baff4facc7da767b0474dcf9b809",
+      "missing_policy": "nan_indicators",
+      "protocol_version": "thesis_revision_20261005_v1",
+      "run_dir": "results_revision/20261005/sensitivity/baf_base/ocsvm/none/run_20261007_043848_125175",
+      "sample_fraction": null
+    },
+    "baf_base/rf/none": {
+      "completed_at_utc": "2026-10-07T01:38:18.859591+00:00",
+      "config_sha256": "6806250990d08d6e6dcbfbf3bf87a401427184b89e5abb80f04fef7280c1c8b4",
+      "dataset_hash_sha256": "7bf10a37ce07e72e14c1b09e5efee3d27261baff4facc7da767b0474dcf9b809",
+      "missing_policy": "nan_indicators",
+      "protocol_version": "thesis_revision_20261005_v1",
+      "run_dir": "results_revision/20261005/sensitivity/baf_base/rf/none/run_20261007_023817_584008",
+      "sample_fraction": null
+    }
+  },
+  "schema_version": 1
+}
