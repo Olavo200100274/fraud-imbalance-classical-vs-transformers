@@ -10,7 +10,7 @@ Santarém, supervised by **Maryam Abbasi** and **Pedro Miguel de Oliveira Martin
 · [Inspect the results](results/) · [Explore the code](src/)
 · [Obtain the datasets](datasets/)
 
-This release contains the final October 2026 dissertation export (V5), the
+This release contains the final October 2026 dissertation export (V6), the
 matching selected scientific evidence and two reviewed companion manuscripts
 in preparation for submission. The manuscripts are not yet published.
 This is research code, not a production fraud system, a journal-acceptance

@@ -5982,10 +5982,10 @@
   "original_reporting_qa_sha256": "7bafe378ab0c2842b03ad408c285e9e8f2e9d09779038176ccd3947227b66f42",
   "primary_cell_count": 72,
   "reference_commit": "c65b11de22e39335ae6a14abc168fd7e284a7cd4",
-  "release_id": "thesis_20261007_v5",
+  "release_id": "thesis_20261007_v6",
   "reporting_output_count": 44,
   "schema_version": 1,
-  "thesis_pdf_sha256": "f16ec52327b11d54247a91c2bc42b6cf48b9bcc1501a04c3454f31c246e38e4d",
+  "thesis_pdf_sha256": "79e37d4e8b22aef863e7c1b56a6a9f4148bceaba296b4cd7aad09be328f67238",
   "thesis_public_path": "publications/thesis.pdf",
   "threshold_study_count": 12,
   "transfer_model_count": 6

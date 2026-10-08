@@ -9,10 +9,10 @@ Class Imbalance: A Leakage-Free Comparative Study of Classical Machine Learning
 and Tabular Transformers*. MSc dissertation, Universidade Politécnica de Santarém.
 Supervision: Maryam Abbasi and Pedro Miguel de Oliveira Martins.
 
-This copy is the complete, locally reviewed October 2026 V5 export, not a claim
+This copy is the complete, locally reviewed October 2026 V6 export, not a claim
 of institutional acceptance or an awarded degree. It has 134 physical PDF pages.
 Its SHA-256 is
-`f16ec52327b11d54247a91c2bc42b6cf48b9bcc1501a04c3454f31c246e38e4d`.
+`79e37d4e8b22aef863e7c1b56a6a9f4148bceaba296b4cd7aad09be328f67238`.
 
 ## Companion manuscripts
 
