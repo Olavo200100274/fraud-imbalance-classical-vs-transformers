@@ -345,7 +345,7 @@ def build_export(root: Path, revision: Path, thesis: Path):
     )
     plan.add("provenance/README.md", limits.encode(), (), "Release scope and limitations")
     release = {
-        "schema_version": SCHEMA_VERSION, "exporter": "export_public_evidence.py", "release_id": "thesis_20261007_v6",
+        "schema_version": SCHEMA_VERSION, "exporter": "export_public_evidence.py", "release_id": "thesis_20261008_v7",
         "evidence_status": "complete selected evidence, checked against frozen reporting QA",
         "original_manifest_sha256": digest(manifest_file), "original_reporting_qa_sha256": digest(qa_file),
         "thesis_pdf_sha256": digest(thesis), "thesis_public_path": "publications/thesis.pdf",
@@ -439,7 +439,7 @@ def main(argv=None):
         print(json.dumps(verify_release(output, project_root=root), indent=2))
         return
     revision = args.revision_root or root / "results_revision" / "20261005"
-    thesis = args.thesis or root / "deliverables" / "2026_10_07_Thesis_MSc_Olavo_V6.pdf"
+    thesis = args.thesis or root / "deliverables" / "2026_10_08_Thesis_MSc_Olavo_V7.pdf"
     plan, release = build_export(root, revision, thesis)
     plan.write(output)
     verified = verify_release(output, project_root=root)

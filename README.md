@@ -10,7 +10,7 @@ Santarém, supervised by **Maryam Abbasi** and **Pedro Miguel de Oliveira Martin
 · [Inspect the results](results/) · [Explore the code](src/)
 · [Obtain the datasets](datasets/)
 
-This release contains the final October 2026 dissertation export (V6), the
+This release contains the final October 2026 dissertation export (V7), the
 matching selected scientific evidence and two reviewed companion manuscripts
 in preparation for submission. The manuscripts are not yet published.
 This is research code, not a production fraud system, a journal-acceptance
@@ -25,8 +25,9 @@ packages accompany the manuscripts:
 - [Article 2: threshold selection and alert workload](https://github.com/Applied-Intelligence-Hub/tabular-ml-dl-threshold-benchmark).
 
 The manuscripts share experimental evidence; they are not independent
-replications. The PDF exports currently supplied precede the final repository-link
-updates to the LaTeX sources and will be replaced after author-side recompilation.
+replications. The reviewed PDF exports include the repository links in the body
+text. Article 2 also identifies the public scripts and frozen inputs used to
+regenerate its figures. These documentary updates do not change the experiments.
 
 ## Study and principal findings
 

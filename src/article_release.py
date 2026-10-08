@@ -232,7 +232,7 @@ def export(author_root, destination, article):
                 "parent_repository": PARENT, "parent_source_commit": reference,
                 "original_reporting_qa_sha256": digest(qa_path), "original_selection_sha256": digest(original),
                 "primary_runs": primary, "control_runs": control_records, "threshold_studies": studies, "transfer_runs": transfers,
-                "manuscript_status": "Unpublished manuscript in preparation for submission; PDF precedes final repository-link additions",
+                "manuscript_status": "Unpublished manuscript in preparation for submission; reviewed PDF includes dedicated repository links",
                 "omitted": ["raw datasets", "trained model weights", "full training archives", "private writing sources", "editorial correspondence"],
                 "files": dict(sorted(inventory.items()))}
     # Adding plot-ready inputs later updates this dedicated manifest, not the

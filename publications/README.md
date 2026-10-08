@@ -9,10 +9,10 @@ Class Imbalance: A Leakage-Free Comparative Study of Classical Machine Learning
 and Tabular Transformers*. MSc dissertation, Universidade Politécnica de Santarém.
 Supervision: Maryam Abbasi and Pedro Miguel de Oliveira Martins.
 
-This copy is the complete, locally reviewed October 2026 V6 export, not a claim
+This copy is the complete, locally reviewed October 2026 V7 export, not a claim
 of institutional acceptance or an awarded degree. It has 134 physical PDF pages.
 Its SHA-256 is
-`79e37d4e8b22aef863e7c1b56a6a9f4148bceaba296b4cd7aad09be328f67238`.
+`517a0735ccdcbcc68baf50647a48402c0550db340366fc37d7765826e22c76bb`.
 
 ## Companion manuscripts
 
@@ -36,13 +36,15 @@ Dedicated code and evidence repositories:
 
 The original thesis repository is
 [fraud-imbalance-classical-vs-transformers](https://github.com/Olavo200100274/fraud-imbalance-classical-vs-transformers).
-The current PDFs precede the final repository-link additions in their LaTeX
-sources. Replacement PDF exports will be checked before publication here.
+The PDFs were reviewed on 8 October 2026 and include the repository links in
+the body text. Article 2's reproduction section names the public scripts and
+frozen inputs available in its dedicated repository. The scientific evidence
+and reported results are unchanged.
 
 PDF SHA-256 hashes:
 
-- `article_1.pdf`: `9a568c789414b5c4b0066ea31e3921dec023612e2315f001b2d4cd4f092b6f99`.
-- `article_2.pdf`: `d95f31357e2a19037526416577afa7c42453a8a01c60f10676a8f09b036bcab5`.
+- `article_1.pdf`: `a5dcd751519a74984c343a47fe1a3e1c3dca22c8c6d723c22469ca119cf669be`.
+- `article_2.pdf`: `782952fcf85c3537fbd47d9b04c9a01ab7ec2d6a5cef5546b79071796bce09e0`.
 
 Preparation for submission does not imply that the manuscripts are already
 submitted, under journal review or accepted for publication.
