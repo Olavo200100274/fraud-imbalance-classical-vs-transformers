@@ -16,6 +16,18 @@ in preparation for submission. The manuscripts are not yet published.
 This is research code, not a production fraud system, a journal-acceptance
 claim or confirmation of an awarded degree.
 
+This original repository retains the development history and is the main
+repository for the dissertation. It was renamed from `FraudDetection` on
+8 October 2026 without replacing its history. Dedicated code and evidence
+packages accompany the manuscripts:
+
+- [Article 1: imbalance sensitivity, transfer and interpretability](https://github.com/Applied-Intelligence-Hub/transformers-vs-ml-fraud-detection).
+- [Article 2: threshold selection and alert workload](https://github.com/Applied-Intelligence-Hub/tabular-ml-dl-threshold-benchmark).
+
+The manuscripts share experimental evidence; they are not independent
+replications. The PDF exports currently supplied precede the final repository-link
+updates to the LaTeX sources and will be replaced after author-side recompilation.
+
 ## Study and principal findings
 
 The study separates **ranking**, **validation-selected decision thresholds**
@@ -118,8 +130,8 @@ Windows 11, an Intel Core i5-13600KF, 16 GB RAM and an NVIDIA RTX 3070 (8 GB).
 These are recorded conditions, not certified minimum specifications.
 
 ```powershell
-git clone https://github.com/Olavo200100274/FraudDetection.git
-cd FraudDetection
+git clone https://github.com/Olavo200100274/fraud-imbalance-classical-vs-transformers.git
+cd fraud-imbalance-classical-vs-transformers
 py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 $env:PYTHONUTF8 = "1"

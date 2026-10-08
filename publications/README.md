@@ -29,6 +29,16 @@ sensitivity, controlled transfer and interpretation boundaries; the second
 focuses on decision thresholds and alert workload. They share experimental
 evidence rather than representing independent replications.
 
+Dedicated code and evidence repositories:
+
+- [Article 1](https://github.com/Applied-Intelligence-Hub/transformers-vs-ml-fraud-detection).
+- [Article 2](https://github.com/Applied-Intelligence-Hub/tabular-ml-dl-threshold-benchmark).
+
+The original thesis repository is
+[fraud-imbalance-classical-vs-transformers](https://github.com/Olavo200100274/fraud-imbalance-classical-vs-transformers).
+The current PDFs precede the final repository-link additions in their LaTeX
+sources. Replacement PDF exports will be checked before publication here.
+
 PDF SHA-256 hashes:
 
 - `article_1.pdf`: `9a568c789414b5c4b0066ea31e3921dec023612e2315f001b2d4cd4f092b6f99`.
