@@ -5,14 +5,16 @@
 MSc dissertation by **Olavo Miguel Cabaço Caixeiro**, Universidade Politécnica de
 Santarém, supervised by **Maryam Abbasi** and **Pedro Miguel de Oliveira Martins**.
 
-[Read the dissertation](publications/thesis.pdf) · [Inspect the results](results/)
-· [Explore the code](src/) · [Obtain the datasets](datasets/)
+[Read the dissertation](publications/thesis.pdf)
+· [Read the manuscripts](publications/README.md#companion-manuscripts)
+· [Inspect the results](results/) · [Explore the code](src/)
+· [Obtain the datasets](datasets/)
 
-This release contains the final October 2026 dissertation export (V5) and the
-matching selected scientific evidence. Companion article PDFs will be added
-after their revised Overleaf builds have been validated. This is research code,
-not a production fraud system, a journal-acceptance claim or confirmation of an
-awarded degree.
+This release contains the final October 2026 dissertation export (V5), the
+matching selected scientific evidence and two reviewed companion manuscripts
+in preparation for submission. The manuscripts are not yet published.
+This is research code, not a production fraud system, a journal-acceptance
+claim or confirmation of an awarded degree.
 
 ## Study and principal findings
 
@@ -91,7 +93,7 @@ notebooks/      Exploratory data analysis
 src/            Scientific pipeline, diagnostics and evidence checks
 tests/          Synthetic protocol and integrity tests
 results/        Final selected metrics, tables, figures and provenance
-publications/   Validated dissertation PDF; articles follow after validation
+publications/   Reviewed dissertation and companion manuscript PDFs
 ```
 
 [results/README.md](results/README.md) explains the evidence export.
